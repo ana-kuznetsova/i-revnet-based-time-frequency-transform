@@ -19,7 +19,7 @@ wandb.init(project='i-rev-net-verify', entity='anakuzne')
 ##################################################################################
 # flag
 testFlag = 0 # 0:full train mode 1:test mode (few files) 
-deviceNum  = 1
+deviceNum  = 0
 
 ##################################################################################
 # exp. param
