@@ -66,6 +66,7 @@ config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
 config.dataset = 'COISINE'
+config.branch = 'ignore_noise'
 
 ##################################################################################
 initPad= red-1
