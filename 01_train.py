@@ -41,7 +41,7 @@ cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
 noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
 
 # save dnn directory
-dnn_dir  = '/data/anakuzne/experiments/i-rev-net'
+dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     

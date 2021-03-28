@@ -20,7 +20,7 @@ from iRevNet import modelDifinition
 
 ##################################################################################
 # flag
-deviceNum  = 0
+deviceNum  = 1
 
 ##################################################################################
 # exp. param
@@ -42,11 +42,11 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = 'D:/sound_data/Voicebank_DEMAND/clean_testset_wav2'
-noisyDir  = 'D:/sound_data/Voicebank_DEMAND/noisy_testset_wav2'
+cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
+noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
 
 # save dnn directory
-dnn_dir  = './dnn_dir/' 
+dnn_dir  = '/data/anakuzne/experiments/i-rev-net/' 
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     
@@ -72,14 +72,14 @@ saveName = \
 '_bpl'+str(speechLen)+\
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
-fileName = dnn_dir+saveName
+fileName = os.path.join(dnn_dir, saveName)
 
-testDir = 'D:/sound_data/test_iRevNet_pytorch'
+testDir = '/data/anakuzne/experiments/i-rev-net/test_out/'
 if(os.path.isdir(testDir)==False):
             os.mkdir(testDir)
 #print(saveName)
 
-condDir = testDir+'/'+saveName
+condDir = os.path.join(testDir, saveName)
 if(os.path.isdir(condDir)==False):
     os.mkdir(condDir)
             
