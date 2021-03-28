@@ -37,8 +37,8 @@ maskEstimator = 'binary'
 lossMode = 'SDR'
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-VOiCES/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-VOiCES/noisy'
+cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
+noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net'
@@ -65,7 +65,7 @@ config.batch_size = batchSize
 config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
-config.dataset = 'VOICES'
+config.dataset = 'COISINE'
 
 ##################################################################################
 initPad= red-1
