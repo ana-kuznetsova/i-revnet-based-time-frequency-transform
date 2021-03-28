@@ -10,8 +10,12 @@ import torch.optim as optim
 from modules import takeModules as tm
 from modules import myLossFunction as myLF
 from iRevNet import modelDifinition
+import wandb
 
 
+
+#################################################################################
+wandb.init(project='i-rev-net-verify', entity='anakuzne')
 ##################################################################################
 # flag
 testFlag = 0 # 0:full train mode 1:test mode (few files) 
@@ -33,11 +37,11 @@ maskEstimator = 'binary'
 lossMode = 'SDR'
 
 # training data directory
-cleanDir  = 'D:/sound_data/Voicebank_DEMAND/clean_trainset_wav'
-noisyDir  = 'D:/sound_data/Voicebank_DEMAND/noisy_trainset_wav'
+cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
+noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
 
 # save dnn directory
-dnn_dir  = './dnn_dir/'
+dnn_dir  = './data/anakuzne/experiments/i-rev-net/'
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     
@@ -49,8 +53,19 @@ valRatio = 0.1
 speechLen = 2**15
 
 
-maxEpoch         = 500
-lr_init           = 0.0001
+maxEpoch = 500
+lr_init  = 0.0001
+
+###Save configs to wandb ####
+config = wandb.config
+config.learning_rate = lr_init
+config.max_epoch = maxEpoch
+config.speech_per_set = speechPerSet
+config.batch_size = batchSize
+config.loss_mode = lossMode
+config.maskEstimator = maskEstimator
+config.filter = filt
+config.dataset = 'COSINE'
 
 ##################################################################################
 initPad= red-1
@@ -83,11 +98,14 @@ for param in estClean.parameters():
     
 
 
-print("train start") 
+print("Start training...") 
 start = time.time()
 olddatetime = 'None' 
 trainLoss = np.array([])
 validLoss = np.array([])
+
+### Watch WANDB ###
+wandb.watch(estClean)
 for epoch in range(1, maxEpoch+1):
 #    print(saveName)
     sumLoss  = 0.0
@@ -124,7 +142,6 @@ for epoch in range(1, maxEpoch+1):
                 xtmp =  xtmp.unsqueeze(0)
                 s = torch.cat( (s,stmp), 0)
                 x = torch.cat( (x,xtmp), 0)
-                
             y, _, _ = estClean(x)
             loss = lossFunc(s, x, y)
             loss.backward()
@@ -137,6 +154,7 @@ for epoch in range(1, maxEpoch+1):
     print("time/epoch(Train):"+str(time.time() - start))
     print("avg. loss:"+str(sumLoss/batchNum))
     trainLoss= np.append(trainLoss, sumLoss/batchNum)
+    wandb.log({"loss": sumLoss/batchNum})
     
     if valRatio !=0:
         start = time.time()
@@ -188,6 +206,7 @@ for epoch in range(1, maxEpoch+1):
         print("time/epoch(Valid):"+str(time.time() - start))
         print("avg. loss:"+str(sumLoss_val/batchNum_val))
         validLoss= np.append(validLoss, sumLoss_val/batchNum_val)
+        wandb.log({"val_loss": sumLoss_val/batchNum_val})
         for param in estClean.parameters():
             param.requires_grad = True
         
