@@ -35,10 +35,11 @@ maskEstimator = 'binary'
 #maskEstimator = 'insNormUNet5Sigmoid'
 
 lossMode = 'SDR'
+dataset = 'voicebank-demand'
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/data/anakuzne/voicebank-demand/clean_trainset_28spk_wav'
+noisyDir  = '/data/anakuzne/voicebank-demand/noisy_trainset_28spk_wav'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
@@ -65,7 +66,7 @@ config.batch_size = batchSize
 config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
-config.dataset = 'COISINE'
+config.dataset = dataset
 
 ##################################################################################
 initPad= red-1
@@ -78,7 +79,7 @@ saveName = \
 '_'+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio)
+'_vr'+str(valRatio) + dataset
 fileName = dnn_dir+saveName
 print(fileName)
 
