@@ -76,7 +76,7 @@ saveName = \
 'R'+str(initPad+1)+\
 '_'+filt+\
 '_'+maskEstimator+\
-'_'+lossMode+\
+'_NoNoise'+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
 '_vr'+str(valRatio)
