@@ -37,8 +37,8 @@ maskEstimator = 'binary'
 lossMode = 'SDR'
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/data/anakuzne/voicebank-demand/clean_trainset_28spk_wav'
+noisyDir  = '/data/anakuzne/voicebank-demand/noisy_trainset_28spk_wav'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
@@ -65,7 +65,7 @@ config.batch_size = batchSize
 config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
-config.dataset = 'COISINE'
+config.dataset = 'voicebank-demand'
 config.branch = 'ignore_noise'
 
 ##################################################################################
@@ -79,8 +79,8 @@ saveName = \
 '_NoNoise'+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio)
-fileName = dnn_dir+saveName
+'_vr'+str(valRatio) + 'voicebank'
+fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
 
 ##################################################################################
