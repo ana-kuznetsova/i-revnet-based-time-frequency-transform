@@ -38,8 +38,8 @@ lossMode = 'SDR'
 dataset = 'voicebank-demand'
 
 # training data directory
-cleanDir  = '/data/anakuzne/voicebank-demand/clean_trainset_28spk_wav'
-noisyDir  = '/data/anakuzne/voicebank-demand/noisy_trainset_28spk_wav'
+cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
+noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
