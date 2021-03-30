@@ -43,8 +43,8 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/subjective-eval-COSINE-test/clean'
-noisyDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/subjective-eval-COSINE-test/noisy'
+cleanDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/voicebank-demand/clean_testset_wav'
+noisyDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/voicebank-demand/noisy_testset_wav'
 
 # save dnn directory
 dnn_dir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/' 
