@@ -61,7 +61,9 @@ maxEpoch = 500
 
 
 initPad=red-1
+
 ##################################################################################
+'''
 saveName = \
 'iRevNet_L'+str(layerNum)+\
 'R'+str(initPad+1)+\
@@ -72,7 +74,8 @@ saveName = \
 '_bpl'+str(speechLen)+\
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
-fileName = os.path.join(dnn_dir, saveName)
+'''
+fileName = os.path.join(dnn_dir, 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1_ep500_cosine')
 
 testDir = '/data/anakuzne/experiments/i-rev-net/test_out/'
 if(os.path.isdir(testDir)==False):
