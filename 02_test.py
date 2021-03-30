@@ -33,8 +33,8 @@ filt = 'LinearNoBiasUNet5SpecNorm'
 red = 4
 
 
-#maskEstimator = 'binary'
-maskEstimator = 'UNet5Sigmoid'
+maskEstimator = 'binary'
+#maskEstimator = 'UNet5Sigmoid'
 
 lossMode = 'SDR'
 
