@@ -43,8 +43,8 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/voicebank-demand/clean_testset_wav'
-noisyDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/voicebank-demand/noisy_testset_wav'
+cleanDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/subjective-eval-COSINE-test/clean'
+noisyDir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/subjective-eval-COSINE-test/noisy'
 
 # save dnn directory
 dnn_dir  = '/N/project/aspire_research_cs/Student_Data/anakuzne/' 
@@ -76,7 +76,7 @@ saveName = \
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
 '''
-saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1voicebank-demand_ep500'
+saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1_ep500_cosine'
 fileName = os.path.join(dnn_dir, saveName)
 
 testDir = '/N/project/aspire_research_cs/Student_Data/anakuzne/test_out/'
