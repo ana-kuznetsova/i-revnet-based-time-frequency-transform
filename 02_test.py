@@ -106,8 +106,6 @@ xdataFns = [os.path.join(noisyDir, i) for i in fnames]
 
 testNum = len(sdataFns)
 
-print(sdataFns[:1], xdataFns[:1])
-
 for utter in range(testNum):
     sys.stdout.write('\rTestSet: '+str(utter+1)+'/'+str(testNum)) 
     sys.stdout.flush()
@@ -116,8 +114,7 @@ for utter in range(testNum):
     sLen = len(s) 
     zp = speechLen - sLen%speechLen
     s = torch.cat( (s, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)
-    x = torch.cat( (x, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)
-    print("X:", x.shape, "S", s.shape)    
+    x = torch.cat( (x, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)  
     y, phi, mask = estClean(x)
     y = y.detach()
 
