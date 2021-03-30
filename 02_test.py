@@ -93,7 +93,7 @@ if(os.path.isdir(condDir)==False):
 
 
 estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
-estClean.load_state_dict(torch.load(fileName), map_location='cuda:1')
+estClean.load_state_dict(torch.load(fileName))
 
 
 sdataFns  = glob.glob(cleanDir + "/*.wav")
