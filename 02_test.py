@@ -108,7 +108,8 @@ for utter in range(testNum):
     sLen = len(s) 
     zp = speechLen - sLen%speechLen
     s = torch.cat( (s, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)
-    x = torch.cat( (x, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)    
+    x = torch.cat( (x, torch.zeros(zp).cuda(deviceNum)), 0 ).unsqueeze(0)
+    print("X:", x.shape, "S", s.shape)    
     y, phi, mask = estClean(x)
     y = y.detach()
 
