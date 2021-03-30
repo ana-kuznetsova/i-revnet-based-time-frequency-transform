@@ -33,9 +33,9 @@ filt = 'LinearNoBiasUNet5SpecNorm'
 red = 4
 
 
-#maskEstimator = 'binary'
+maskEstimator = 'binary'
 #maskEstimator = 'UNet5Sigmoid'
-maskEstimator = 'insNormUNet5Sigmoid'
+#maskEstimator = 'insNormUNet5Sigmoid'
 
 lossMode = 'SDR'
 
@@ -76,7 +76,7 @@ saveName = \
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
 '''
-saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1_ep500_cosine'
+saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1voicebank-demand_ep500'
 fileName = os.path.join(dnn_dir, saveName)
 
 testDir = '/N/project/aspire_research_cs/Student_Data/anakuzne/test_out/'
