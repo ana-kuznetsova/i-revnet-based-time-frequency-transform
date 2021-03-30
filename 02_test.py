@@ -100,7 +100,7 @@ sdataFns  = glob.glob(cleanDir + "/*.wav")
 xdataFns  = glob.glob(noisyDir + "/*.wav")
 testNum = len(sdataFns)
 
-print(sdataFns[:10], xdataFns[:10])
+print(sdataFns[:1], xdataFns[:1])
 
 for utter in range(testNum):
     sys.stdout.write('\rTestSet: '+str(utter+1)+'/'+str(testNum)) 
