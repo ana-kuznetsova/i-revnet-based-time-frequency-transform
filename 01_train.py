@@ -25,8 +25,8 @@ deviceNum  = 2
 # exp. param
 layerNum = 6
 
-filt = 'UNet5SpecNorm'
-#filt = 'LinearNoBiasUNet5SpecNorm'
+#filt = 'UNet5SpecNorm'
+filt = 'LinearNoBiasUNet5SpecNorm'
 
 red = 4
 
