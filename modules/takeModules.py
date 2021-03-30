@@ -40,14 +40,17 @@ def dataLoad(**kwargs):
         return dataLoad_CN(**kwargs)
     
 def dataLoad_CN(clean_dir, noisy_dir, val_ratio, speech_per_set, test_flag): 
+    fnames = os.listdir(noisy_dir)
     ##Use for VOICES data only##
     #c_files = glob.glob(clean_dir + "/" + "*.wav")
     #n_files = glob.glob(noisy_dir + "/" + "*.wav")
+    n_files = [os.path.join(noisy_dir, i) for i in fnames]
+    c_files = [f.split('-')[0]+'.wav' for f in fnames]
+
 
     ##Use for all other data
-    fnames = os.listdir(noisy_dir)
-    c_files = [os.path.join(clean_dir, i) for i in fnames]
-    n_files = [os.path.join(noisy_dir, i) for i in fnames]
+    #c_files = [os.path.join(clean_dir, i) for i in fnames]
+    #n_files = [os.path.join(noisy_dir, i) for i in fnames]
 
     
     Num_wav   = len( c_files )
