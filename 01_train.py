@@ -37,8 +37,8 @@ maskEstimator = 'binary'
 lossMode = 'SDR'
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/data/anakuzne/COSINE/clean'
+noisyDir  = '/data/anakuzne/COSINE/noisy'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
