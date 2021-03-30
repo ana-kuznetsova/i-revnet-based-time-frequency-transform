@@ -42,11 +42,11 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/nobackup/anakuzne/models/subjective-eval-COSINE-test/clean'
+noisyDir  = '/nobackup/anakuzne/models/subjective-eval-COSINE-test/noisy'
 
 # save dnn directory
-dnn_dir  = '/data/anakuzne/experiments/i-rev-net/' 
+dnn_dir  = '/nobackup/anakuzne/models/' 
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     
@@ -78,7 +78,7 @@ saveName = \
 saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_SDR_bs16_bpl32768_vr0.1_ep500_cosine'
 fileName = os.path.join(dnn_dir, saveName)
 
-testDir = '/data/anakuzne/experiments/i-rev-net/test_out/'
+testDir = '/nobackup/anakuzne/models/test_out/'
 if(os.path.isdir(testDir)==False):
             os.mkdir(testDir)
 #print(saveName)
