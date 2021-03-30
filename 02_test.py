@@ -96,8 +96,14 @@ estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimato
 estClean.load_state_dict(torch.load(fileName))
 
 
-sdataFns  = glob.glob(cleanDir + "/*.wav")
-xdataFns  = glob.glob(noisyDir + "/*.wav")
+#sdataFns  = glob.glob(cleanDir + "/*.wav")
+#xdataFns  = glob.glob(noisyDir + "/*.wav")
+
+fnames = os.listdir(cleanDir)
+
+sdataFns = [os.path.join(cleanDir, i) for i in fnames]
+xdataFns = [os.path.join(noisyDir, i) for i in fnames]
+
 testNum = len(sdataFns)
 
 print(sdataFns[:1], xdataFns[:1])
