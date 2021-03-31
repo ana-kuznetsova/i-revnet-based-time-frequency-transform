@@ -45,7 +45,7 @@ def dataLoad_CN(clean_dir, noisy_dir, val_ratio, speech_per_set, test_flag):
     #c_files = glob.glob(clean_dir + "/" + "*.wav")
     #n_files = glob.glob(noisy_dir + "/" + "*.wav")
     n_files = [os.path.join(noisy_dir, i) for i in fnames]
-    c_files = [os.path.join(clean_dir, f.split('-')[0]+'.wav') for f in fnames]
+    c_files = [os.path.join(clean_dir, f.split('-')[0]+'-clean-VOiCES.wav') for f in fnames]
 
     print("FILES:", n_files[:1], c_files[:1])
 
