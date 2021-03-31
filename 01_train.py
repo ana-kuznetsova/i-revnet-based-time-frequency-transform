@@ -35,11 +35,11 @@ maskEstimator = 'binary'
 #maskEstimator = 'insNormUNet5Sigmoid'
 
 lossMode = 'SDR'
-dataset = 'voicebank-demand'
+dataset = 'VOICES'
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/data/anakuzne/VOICES/clean'
+noisyDir  = '/data/anakuzne/VOICES/noisy'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
