@@ -78,9 +78,9 @@ def dataLoad_CN(clean_dir, noisy_dir, val_ratio, speech_per_set, test_flag):
             sys.stdout.flush()
         c_fn = c_files[TrnIndex[ii]]
         n_fn = n_files[TrnIndex[ii]]
-        s, org_fs = wavread( c_fn )[:-1] ##REMOVE IF NOT VOICES
+        s, org_fs = wavread( c_fn ) 
         x, org_fs = wavread( n_fn ) 
-        S_set.append( np.vstack([s,x]) )
+        S_set.append( np.vstack([s[:-1],x]) )##REMOVE IF NOT VOICES
         cnt += 1
         if(cnt == speech_per_set):
             cnt = 0
