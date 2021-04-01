@@ -43,8 +43,8 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = '/data/anakuzne/voicebank-demand/clean_testset_wav'
-noisyDir  = '/data/anakuzne/voicebank-demand/noisy_testset_wav'
+cleanDir  = '/data/anakuzne/COSINE/clean_test'
+noisyDir  = '/data/anakuzne/COSINE/noisy_test'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/' 
@@ -76,7 +76,7 @@ saveName = \
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
 '''
-saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_NoNoiseSDR_bs16_bpl32768_vr0.1voicebank_ep500'
+saveName = 'iRevNet_L6R4_UNet5SpecNorm_binary_NoNoiseSDR_bs16_bpl32768_vr0.1COSINE_ep500'
 fileName = os.path.join(dnn_dir, saveName)
 
 testDir = '/data/anakuzne/experiments/i-rev-net/test_out/'
