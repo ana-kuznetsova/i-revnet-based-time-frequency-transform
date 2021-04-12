@@ -84,7 +84,7 @@ fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
 
 ##################################################################################
-trainData, validData = tm.dataLoad(clean_dir = cleanDir, noisy_dir = noisyDir,
+trainData, validData = tm.dataLoad(clean_dir = cleanDir, noisy_dir = noisyDir, csv_dir = csv_dir,
                                  val_ratio = valRatio, speech_per_set = speechPerSet,
                                  test_flag = testFlag)
 

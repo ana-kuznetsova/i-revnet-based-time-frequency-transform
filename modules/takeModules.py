@@ -9,6 +9,7 @@ import sys, scipy, glob
 import numpy as np
 from scipy.io import wavfile
 import os
+import pandas as pd
 
 import torch
 import torch.nn as nn
@@ -36,15 +37,14 @@ def wavwrite(fn, data, fs):
 #####################################################################
 # load clean & noisy set
 def dataLoad(**kwargs):
-    if 'clean_dir' in kwargs and 'noisy_dir' in kwargs:
+    if 'clean_dir' in kwargs and 'noisy_dir' in kwargs and 'csv_dir':
         return dataLoad_CN(**kwargs)
     
-def dataLoad_CN(clean_dir, noisy_dir, val_ratio, speech_per_set, test_flag): 
-    fnames = os.listdir(clean_dir)
-    #c_files = glob.glob(clean_dir + "/" + "*.wav")
-    #n_files = glob.glob(noisy_dir + "/" + "*.wav")
-    c_files = [os.path.join(clean_dir, i) for i in fnames]
-    n_files = [os.path.join(noisy_dir, i) for i in fnames]
+def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag): 
+    df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy.csv'))
+    df_clean = pd.read_csv(os.path.join(csv_dir, 'clean.csv'))
+    c_files = df_clean['path']
+    n_files = df_noisy['path']
     Num_wav   = len( c_files )
     if test_flag == 1:
         Num_wav = round(Num_wav*0.02)
