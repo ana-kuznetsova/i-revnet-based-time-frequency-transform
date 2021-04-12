@@ -41,8 +41,8 @@ def dataLoad(**kwargs):
         return dataLoad_CN(**kwargs)
     
 def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag): 
-    df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy.csv'))
-    df_clean = pd.read_csv(os.path.join(csv_dir, 'clean.csv'))
+    df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))
+    df_clean = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))
     c_files = df_clean['path']
     n_files = df_noisy['path']
     Num_wav   = len( c_files )
@@ -52,7 +52,9 @@ def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_f
     DevNum    = Num_wav-TrnNum    # 残りは varidation 用
     perm      = np.random.permutation( Num_wav )
     TrnIndex  = perm[0:TrnNum]       # Training set
+    print("Training set:", TrnIndex[:5])
     DevIndex  = perm[TrnNum:Num_wav] # Varidation set
+    print("Sev set:", DevIndex[:5])
 
     S_all = []
     S_set = []

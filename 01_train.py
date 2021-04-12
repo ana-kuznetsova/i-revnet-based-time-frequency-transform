@@ -37,8 +37,9 @@ maskEstimator = 'binary'
 lossMode = 'SDR'
 
 # training data directory
-cleanDir  = '/data/anakuzne/voicebank-demand/clean_trainset_28spk_wav'
-noisyDir  = '/data/anakuzne/voicebank-demand/noisy_trainset_28spk_wav'
+cleanDir  = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
+noisyDir  = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
+csv_dir = '/nobackup/anakuzne/data/COSINE-orig/csv/'
 
 # save dnn directory
 dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
