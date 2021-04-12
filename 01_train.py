@@ -42,7 +42,7 @@ noisyDir  = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
 csv_dir = '/nobackup/anakuzne/data/COSINE-orig/csv/'
 
 # save dnn directory
-dnn_dir  = '/data/anakuzne/experiments/i-rev-net/'
+dnn_dir  = '/nobackup/anakuzne/models/i-rev-net-mos/'
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     
