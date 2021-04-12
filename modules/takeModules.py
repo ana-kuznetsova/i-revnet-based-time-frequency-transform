@@ -43,14 +43,16 @@ def dataLoad(**kwargs):
 def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag): 
     df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))
     df_clean = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))
-    c_files = df_clean['path']
-    n_files = df_noisy['path']
+    c_files = [os.path.join(clean_dir, f) for f in df_clean['path']]
+    n_files = [os.path.join(noisy_dir, f) for f in df_noisy['path']]
     Num_wav   = len( c_files )
     if test_flag == 1:
         Num_wav = round(Num_wav*0.02)
     TrnNum    = int(Num_wav* (1-val_ratio)) # 全学習データの 90% を学習に使う
+    print(TrnNum)
     DevNum    = Num_wav-TrnNum    # 残りは varidation 用
     perm      = np.random.permutation( Num_wav )
+    print(perm)
     TrnIndex  = perm[0:TrnNum]       # Training set
     print("Training set:", TrnIndex[:5])
     DevIndex  = perm[TrnNum:Num_wav] # Varidation set
