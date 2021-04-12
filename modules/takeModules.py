@@ -70,12 +70,11 @@ def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_f
             sys.stdout.flush()
         c_fn = c_files[TrnIndex[ii]]
         n_fn = n_files[TrnIndex[ii]]
-        c_mos = c_mos[TrnIndex[ii]]
-        n_mos = n_mos[TrnIndex[ii]]
-        print("scores:", c_mos, n_mos)
+        c_mos_curr = c_mos[TrnIndex[ii]]
+        n_mos_curr = n_mos[TrnIndex[ii]]
         s, org_fs = wavread( c_fn )
         x, org_fs = wavread( n_fn ) 
-        S_set.append( np.vstack([s,x]) )
+        S_set.append((np.vstack([s,x]), c_mos_curr, n_mos_curr))
         cnt += 1
         if(cnt == speech_per_set):
             cnt = 0
