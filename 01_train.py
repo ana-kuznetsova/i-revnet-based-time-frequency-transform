@@ -1,6 +1,6 @@
 import os, time, sys
 import numpy as np
-#from matplotlib import pylab as plt
+from matplotlib import pylab as plt
 
 import torch
 import torch.nn as nn
