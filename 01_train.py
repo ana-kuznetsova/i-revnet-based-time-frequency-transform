@@ -15,7 +15,7 @@ import wandb
 
 
 #################################################################################
-#wandb.init(project='i-rev-net-verify', entity='anakuzne')
+wandb.init(project='i-rev-net-verify', entity='anakuzne')
 ##################################################################################
 # flag
 testFlag = 0 # 0:full train mode 1:test mode (few files) 
@@ -66,7 +66,7 @@ config.batch_size = batchSize
 config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
-config.dataset = 'voicebank-demand'
+config.dataset = 'COSINE'
 config.branch = 'ignore_noise'
 
 ##################################################################################
@@ -76,11 +76,11 @@ saveName = \
 'iRevNet_L'+str(layerNum)+\
 'R'+str(initPad+1)+\
 '_'+filt+\
-'_'+maskEstimator+\
-'_NoNoise'+lossMode+\
+'_'+maskEstimator+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio) + 'Voicebank'
+'_vr'+str(valRatio) + 'COSINE'
+
 fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
 
@@ -107,7 +107,7 @@ trainLoss = np.array([])
 validLoss = np.array([])
 
 ### Watch WANDB ###
-#wandb.watch(estClean)
+wandb.watch(estClean)
 for epoch in range(1, maxEpoch+1):
 #    print(saveName)
     sumLoss  = 0.0
@@ -158,7 +158,7 @@ for epoch in range(1, maxEpoch+1):
     print("time/epoch(Train):"+str(time.time() - start))
     print("avg. loss:"+str(sumLoss/batchNum))
     trainLoss= np.append(trainLoss, sumLoss/batchNum)
-    #wandb.log({"loss": sumLoss/batchNum})
+    wandb.log({"loss": sumLoss/batchNum})
     
     if valRatio !=0:
         start = time.time()
@@ -212,7 +212,7 @@ for epoch in range(1, maxEpoch+1):
         print("time/epoch(Valid):"+str(time.time() - start))
         print("avg. loss:"+str(sumLoss_val/batchNum_val))
         validLoss= np.append(validLoss, sumLoss_val/batchNum_val)
-        #wandb.log({"val_loss": sumLoss_val/batchNum_val})
+        wandb.log({"val_loss": sumLoss_val/batchNum_val})
         for param in estClean.parameters():
             param.requires_grad = True
         
