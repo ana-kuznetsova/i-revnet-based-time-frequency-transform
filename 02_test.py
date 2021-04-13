@@ -101,6 +101,9 @@ estClean.load_state_dict(torch.load(fileName))
 #xdataFns  = glob.glob(noisyDir + "/*.wav")
 sdataFns = pd.read_csv(os.path.join(csv_dir, 'clean-test.csv'))['path'].values
 xdataFns = pd.read_csv(os.path.join(csv_dir, 'noisy-test.csv'))['path'].values
+
+sdataFns = [os.path.join(cleanDir, i) for i in sdataFns]
+xdataFns = [os.path.join(cleanDir, i) for i in sdataFns]
 testNum = len(sdataFns)
 
 for utter in range(testNum):
