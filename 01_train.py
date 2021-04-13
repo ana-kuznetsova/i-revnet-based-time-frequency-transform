@@ -180,6 +180,8 @@ for epoch in range(1, maxEpoch+1):
                 for bs in range( batchSize ):
                     stmp = validMiniSet[perm2_val[bs+utter*batchSize]][0]
                     xtmp = validMiniSet[perm2_val[bs+utter*batchSize]][1]
+                    smos = scoresMiniSet[perm2[bs+utter*batchSize]][0]
+                    xmos = scoresMiniSet[perm2[bs+utter*batchSize]][1]
                     
                     if len(stmp)>speechLen:
                         st = np.random.randint(len(stmp)-speechLen)
@@ -202,7 +204,7 @@ for epoch in range(1, maxEpoch+1):
                 y_val, _, _ = estClean(x_val)
                 d_val = x_val-y_val
                 n_val = x_val-s_val
-                loss = lossFunc(s_val, x_val, y_val)
+                loss = lossFunc(s_val, x_val, y_val, smos, xmos)
                 sumLoss_val += loss.detach().cpu().numpy()
                     
         sys.stdout.write('\n')
