@@ -19,7 +19,7 @@ wandb.init(project='i-rev-net-verify', entity='anakuzne')
 ##################################################################################
 # flag
 testFlag = 0 # 0:full train mode 1:test mode (few files) 
-deviceNum  = 2
+deviceNum  = 3
 
 ##################################################################################
 # exp. param
@@ -53,7 +53,7 @@ Log_reg = 10**(-6)
 valRatio = 0.1
 speechLen = 2**15
 
-frac = 0.4
+frac = 0.5
 
 maxEpoch = 500
 lr_init  = 0.0001
