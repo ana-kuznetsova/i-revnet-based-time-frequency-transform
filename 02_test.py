@@ -7,6 +7,7 @@ Created on Wed Jan 22 13:58:16 2020
 import os, sys, glob
 import numpy as np
 from matplotlib import pylab as plt
+import pandas as pd
 
 import torch
 import torch.nn as nn
@@ -42,11 +43,12 @@ lossMode = 'SDR'
 
 
 # training data directory
-cleanDir  = '/data/anakuzne/subjective-eval-COSINE/clean'
-noisyDir  = '/data/anakuzne/subjective-eval-COSINE/noisy'
+cleanDir  = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
+noisyDir  = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
+csv_dir = '/nobackup/anakuzne/data/COSINE-orig/csv/'
 
 # save dnn directory
-dnn_dir  = '/data/anakuzne/experiments/i-rev-net/' 
+dnn_dir  = '/nobackup/anakuzne/models/i-rev-net-mos/' 
 if(os.path.isdir(dnn_dir)==False):
     os.mkdir(dnn_dir)
     
@@ -62,6 +64,7 @@ maxEpoch = 500
 
 initPad=red-1
 ##################################################################################
+'''
 saveName = \
 'iRevNet_L'+str(layerNum)+\
 'R'+str(initPad+1)+\
@@ -72,9 +75,12 @@ saveName = \
 '_bpl'+str(speechLen)+\
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
+'''
+saveName = 'iRevNet_L6R4_UNet5SpecNorm_binarySDR_bs16_bpl32768_vr0.1COSINE_ep500'
+
 fileName = os.path.join(dnn_dir, saveName)
 
-testDir = '/data/anakuzne/experiments/i-rev-net/test_out/'
+testDir = '/nobackup/anakuzne/models/i-rev-net-mos/test_out/'
 if(os.path.isdir(testDir)==False):
             os.mkdir(testDir)
 #print(saveName)
@@ -91,8 +97,10 @@ estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimato
 estClean.load_state_dict(torch.load(fileName))
 
 
-sdataFns  = glob.glob(cleanDir + "/*.wav")
-xdataFns  = glob.glob(noisyDir + "/*.wav")
+#sdataFns  = glob.glob(cleanDir + "/*.wav")
+#xdataFns  = glob.glob(noisyDir + "/*.wav")
+sdataFns = pd.read_csv(os.path.join(csv_dir, 'clean-test.csv'))['path'].values
+xdataFns = pd.read_csv(os.path.join(csv_dir, 'noisy-test.csv'))['path'].values
 testNum = len(sdataFns)
 
 for utter in range(testNum):
