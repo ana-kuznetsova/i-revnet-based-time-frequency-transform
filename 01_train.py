@@ -53,6 +53,7 @@ Log_reg = 10**(-6)
 valRatio = 0.1
 speechLen = 2**15
 
+frac = 0.1
 
 maxEpoch = 500
 lr_init  = 0.0001
@@ -66,6 +67,7 @@ config.batch_size = batchSize
 config.loss_mode = lossMode
 config.maskEstimator = maskEstimator
 config.filter = filt
+config.frac = frac
 config.dataset = 'COSINE'
 config.branch = 'ignore_noise'
 
@@ -79,7 +81,7 @@ saveName = \
 '_'+maskEstimator+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio) + 'COSINE'
+'_vr'+str(valRatio) + 'COSINE' + '_frac_' + str(frac)
 
 fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
@@ -87,7 +89,7 @@ print(fileName)
 ##################################################################################
 trainData, validData = tm.dataLoad(clean_dir = cleanDir, noisy_dir = noisyDir, csv_dir = csv_dir,
                                  val_ratio = valRatio, speech_per_set = speechPerSet,
-                                 test_flag = testFlag)
+                                 test_flag = testFlag, frac=frac)
 
 estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
 optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)

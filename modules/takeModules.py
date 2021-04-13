@@ -44,13 +44,14 @@ def dataLoad(**kwargs):
     if 'clean_dir' in kwargs and 'noisy_dir' in kwargs and 'csv_dir':
         return dataLoad_CN(**kwargs)
     
-def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag): 
+def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag, frac): 
     df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))
     df_clean = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))
-    c_files = [os.path.join(clean_dir, f) for f in df_clean['path']]
-    c_mos = df_clean["MOS"]
-    n_files = [os.path.join(noisy_dir, f) for f in df_noisy['path']]
-    n_mos = df_noisy["MOS"]
+    frac_ind = int(len(df_noisy)*frac)
+    c_files = [os.path.join(clean_dir, f) for f in df_clean['path']][:frac_ind]
+    c_mos = df_clean["MOS"][:frac_ind]
+    n_files = [os.path.join(noisy_dir, f) for f in df_noisy['path']][:frac_ind]
+    n_mos = df_noisy["MOS"][:frac_ind]
     Num_wav   = len( c_files )
     if test_flag == 1:
         Num_wav = round(Num_wav*0.02)
