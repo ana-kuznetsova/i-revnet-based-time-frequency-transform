@@ -53,7 +53,7 @@ Log_reg = 10**(-6)
 valRatio = 0.1
 speechLen = 2**15
 
-frac = 0.5
+frac = 1.0
 
 maxEpoch = 500
 lr_init  = 0.0001
