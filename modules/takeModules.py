@@ -19,9 +19,13 @@ import torch.nn.functional as F
 # transfer to GPU 
 def list_to_gpu(cpuList, deviceNum):
     gpuList = []
+    scoreList = []
     for ii in range(len(cpuList)):
-        gpuList.append( torch.from_numpy( cpuList[ii] ).float().cuda(deviceNum) )
-    return gpuList
+        aud = cpuList[ii][0]
+        scores = (cpuList[ii][1], cpuList[ii][-1]) 
+        gpuList.append( torch.from_numpy(aud).float().cuda(deviceNum))
+        scoreList.append(scores)
+    return gpuList, scoreList
 
 #####################################################################
 # read & write audio file
