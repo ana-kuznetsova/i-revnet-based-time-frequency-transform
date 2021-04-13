@@ -118,7 +118,8 @@ for epoch in range(1, maxEpoch+1):
     for setNum in range( len(trainData) ):
         sys.stdout.write('\repoch: '+str(epoch)+' TrnSet: '+str(setNum+1)+'/'+str(len(trainData))) 
         sys.stdout.flush()
-        trainMiniSet = tm.list_to_gpu( trainData[ perm1[setNum] ], deviceNum )
+        trainMiniSet, scoresMiniSet = tm.list_to_gpu( trainData[ perm1[setNum] ], deviceNum )
+        print("Scores:", scoresMiniSet)
         perm2 = np.random.permutation( len(trainMiniSet) )
         batchNum = len(trainMiniSet)//batchSize
         for utter in range(batchNum):
