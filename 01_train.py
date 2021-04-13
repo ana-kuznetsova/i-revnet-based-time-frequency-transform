@@ -81,7 +81,7 @@ saveName = \
 '_'+maskEstimator+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio) + 'COSINE' + '_frac_' + str(frac)
+'_vr'+str(valRatio) + 'COSINE' + '_frac_' + str(frac) + '-MOS'
 
 fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
