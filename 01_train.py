@@ -130,7 +130,6 @@ for epoch in range(1, maxEpoch+1):
                 xtmp = trainMiniSet[perm2[bs+utter*batchSize]][1]
                 smos = scoresMiniSet[perm2[bs+utter*batchSize]][0]
                 xmos = scoresMiniSet[perm2[bs+utter*batchSize]][1]
-                print("Scores:", smos, xmos)
                 
                 if len(stmp)>speechLen:
                     st = np.random.randint(len(stmp)-speechLen)
@@ -148,7 +147,7 @@ for epoch in range(1, maxEpoch+1):
                 s = torch.cat( (s,stmp), 0)
                 x = torch.cat( (x,xtmp), 0)
             y, _, _ = estClean(x)
-            loss = lossFunc(s, x, y)
+            loss = lossFunc(s, x, y, smos, xmos)
             loss.backward()
             optimizer.step()
             
