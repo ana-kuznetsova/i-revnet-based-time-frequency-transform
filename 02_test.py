@@ -28,8 +28,8 @@ deviceNum  = 1
 layerNum = 6
 
 
-#filt = 'UNet5SpecNorm'
-filt = 'LinearNoBiasUNet5SpecNorm'
+filt = 'UNet5SpecNorm'
+#filt = 'LinearNoBiasUNet5SpecNorm'
 
 red = 4
 
