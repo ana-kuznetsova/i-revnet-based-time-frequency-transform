@@ -170,7 +170,7 @@ for epoch in range(1, maxEpoch+1):
         for setNum in range( len(validData) ):
             sys.stdout.write('\repoch: '+str(epoch)+' ValSet: '+str(setNum+1)+'/'+str(len(validData))) 
             sys.stdout.flush()
-            validMiniSet = tm.list_to_gpu( validData[ perm1_val[setNum] ], deviceNum )
+            validMiniSet, valScoresMiniSet = tm.list_to_gpu( validData[ perm1_val[setNum] ], deviceNum )
             perm2_val = np.random.permutation( len(validMiniSet) )
             batchNum_val = len(validMiniSet)//batchSize
             for utter in range(batchNum_val):
@@ -180,8 +180,8 @@ for epoch in range(1, maxEpoch+1):
                 for bs in range( batchSize ):
                     stmp = validMiniSet[perm2_val[bs+utter*batchSize]][0]
                     xtmp = validMiniSet[perm2_val[bs+utter*batchSize]][1]
-                    smos = scoresMiniSet[perm2[bs+utter*batchSize]][0]
-                    xmos = scoresMiniSet[perm2[bs+utter*batchSize]][1]
+                    smos = valScoresMiniSet[perm2_val[bs+utter*batchSize]][0]
+                    xmos = valScoresMiniSet[perm2_val[bs+utter*batchSize]][1]
                     
                     if len(stmp)>speechLen:
                         st = np.random.randint(len(stmp)-speechLen)
