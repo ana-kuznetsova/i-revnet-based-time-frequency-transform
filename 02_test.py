@@ -76,7 +76,7 @@ saveName = \
 '_vr'+str(valRatio)\
 +'_ep'+str(maxEpoch)
 '''
-saveName = 'iRevNet_L6R4_UNet5SpecNorm_binarySDR_bs16_bpl32768_vr0.1COSINE_ep500'
+saveName = 'iRevNet_L6R4_UNet5SpecNorm_binarySDR_bs16_bpl32768_vr0.1COSINE_frac_1.0-MOS_ep500'
 
 fileName = os.path.join(dnn_dir, saveName)
 
