@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+'''
+Credit: https://aspire.sice.indiana.edu/publication_files/DongWilliamson.INTERSPEECH2020.pdf
+'''
+
 import torch.nn.utils.rnn as rnn
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence

@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+'''
+Credit: https://aspire.sice.indiana.edu/publication_files/DongWilliamson.INTERSPEECH2020.pdf
+'''
 
 class Attention(nn.Module):
   def __init__(self):
