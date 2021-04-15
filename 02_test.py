@@ -97,7 +97,7 @@ res_scores = []
 
 for frac in fractions:
     print('Testing fraction ', frac)
-    saveName = 'iRevNet_L6R4_UNet5SpecNorm_binarySDR_bs16_bpl32768_vr0.1COSINE_frac_'+frac+'_ep500'
+    saveName = 'iRevNet_L6R4_UNet5SpecNorm_binarySDR_bs16_bpl32768_vr0.1COSINE_frac_'+str(frac)+'_ep500'
     fileName = os.path.join(dnn_dir, saveName)
 
     testDir = '/nobackup/anakuzne/models/i-rev-net-mos/test_out/'
