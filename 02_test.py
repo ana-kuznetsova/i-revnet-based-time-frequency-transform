@@ -27,7 +27,7 @@ def calc_pesq(csv, clean_path, enhanced_path):
     names = df['path'].values
     scores = []
     for f in tqdm(names):
-        clean_speech, fs = librosa.load(os.path.join(clean_path, f),sr=16000)
+        clean_speech, fs = librosa.load(os.path.join(clean_path, f), sr=16000)
         enhanced_speech, fs = librosa.load(os.path.join(enhanced_path, f), sr=16000)
         enhanced_speech = 10*(enhanced_speech/np.linalg.norm(enhanced_speech))
         scores.append(pesq(clean_speech, enhanced_speech, 16000))
@@ -152,7 +152,7 @@ for frac in fractions:
 
     frac_pesq = calc_pesq('/nobackup/anakuzne/data/COSINE-orig/csv/clean-test.csv',
                            '/nobackup/anakuzne/data/COSINE-orig/clean-train/',
-                           '/nobackup/anakuzne/models/i-rev-net-mos/test_out/' )
+                           condDir)
     print("Fraction:", frac, "PESQ:", frac_pesq)
     res_scores.append(frac_pesq)
 np.save('/nobackup/anakuzne/models/i-rev-net-mos/pesq_frac.npy', np.array(res_scores))
