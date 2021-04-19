@@ -13,7 +13,7 @@ import wandb
 
 
 #################################################################################
-wandb.init(project='i-rev-net-verify', entity='anakuzne')
+#wandb.init(project='i-rev-net-verify', entity='anakuzne')
 ##################################################################################
 # flag
 testFlag = 0 # 0:full train mode 1:test mode (few files) 
