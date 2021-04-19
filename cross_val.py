@@ -85,7 +85,7 @@ noisy_fnames = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))['path']
 clean_fnames = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))['path']
 fnames = [(i, j) for i, j in zip(noisy_fnames, clean_fnames)]
 
-shuffled_data = random.sample(fnames, k=len(fnames))[:frac]
+shuffled_data = random.sample(fnames, k=len(fnames))[:int(len(fnames)*frac)]
 noisy_fnames, clean_fnames = zip(*shuffled_data)
 
 noisy_fnames = list(noisy_fnames)
