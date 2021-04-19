@@ -91,7 +91,6 @@ trainData, validData = tm.dataLoad(clean_dir = cleanDir, noisy_dir = noisyDir, c
                                  val_ratio = valRatio, speech_per_set = speechPerSet,
                                  test_flag = testFlag, frac=frac)
 
-print(trainData)
 
 estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
 optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)
