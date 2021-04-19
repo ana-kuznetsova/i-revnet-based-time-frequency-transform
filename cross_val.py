@@ -91,12 +91,25 @@ noisy_fnames, clean_fnames = zip(*shuffled_data)
 noisy_fnames = list(noisy_fnames)
 clean_fnames = list(clean_fnames)
 
-print(noisy_fnames[:3], clean_fnames[:3])
 
-X_num = np.arange(len(noisy_fnames))
+######## MODEL DEFINITION #################
+estClean = modelDifinition.iRevNetMasking(layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
+optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)
+lossFunc = eval('myLF.'+lossMode)
+
+
+for param in estClean.parameters():
+    nn.init.normal_(param, 0.0, 0.001)
 
 
 ######### K-FOLD CROSS VALIDATION #########
 kf = KFold(n_splits=5, random_state=56, shuffle=True)
+X_num = np.arange(len(noisy_fnames))
+
 for train_index, test_index in kf.split(X_num):
-    print("TRAIN:", train_index, "TEST:", test_index)
+    ### LOAD DATA ###
+    #print("TRAIN:", train_index, "TEST:", test_index)
+    train_noisy = train_noisy[train_index]
+    train_clean = train_clean[train_index]
+
+    print(train_noisy[0], train_clean[0])
