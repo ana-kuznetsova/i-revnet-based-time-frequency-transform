@@ -78,7 +78,7 @@ fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
 
 
-X_num = 7000
+X_num = np.arange(7000)
 
 kf = KFold(n_splits=5, random_state=56, shuffle=True)
 for train_index, test_index in kf.split(X_num):
