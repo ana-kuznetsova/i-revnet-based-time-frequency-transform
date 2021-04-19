@@ -109,7 +109,7 @@ X_num = np.arange(len(noisy_fnames))
 for train_index, test_index in kf.split(X_num):
     ### LOAD DATA ###
     #print("TRAIN:", train_index, "TEST:", test_index)
-    train_noisy = map(noisy_fnames.__getitem__ , list(train_index))
-    train_clean = map(clean_fnames.__getitem__ , list(train_index))
+    train_noisy = list(map(noisy_fnames.__getitem__ , list(train_index)))
+    train_clean = list(map(clean_fnames.__getitem__ , list(train_index)))
 
     print(train_noisy[0], train_clean[0])
