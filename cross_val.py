@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
+import random
 from sklearn.model_selection import KFold
 
 import torch
@@ -78,8 +79,24 @@ fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
 
 
-X_num = np.arange(7000)
+###### DATA PIPELINE ######
 
+noisy_fnames = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))['path']
+clean_fnames = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))['path']
+fnames = [(i, j) for i, j in zip(noisy_fnames, clean_fnames)]
+
+shuffled_data = random.sample(fnames, k=len(fnames))[:frac]
+noisy_fnames, clean_fnames = zip(*shuffled_data)
+
+noisy_fnames = list(noisy_fnames)
+clean_fnames = list(clean_fnames)
+
+print(noisy_fnames[:3], clean_fnames[:3])
+
+X_num = np.arange(len(noisy_fnames))
+
+
+######### K-FOLD CROSS VALIDATION #########
 kf = KFold(n_splits=5, random_state=56, shuffle=True)
 for train_index, test_index in kf.split(X_num):
     print("TRAIN:", train_index, "TEST:", test_index)

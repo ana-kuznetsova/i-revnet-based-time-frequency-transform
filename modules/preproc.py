@@ -24,7 +24,3 @@ def segment(aud, ms=40, overlap=10):
 def extract_feats(fnames, scores):
     for aud in tqdm(fnames):
         aud = AudioSegment.from_wav(aud)
-
-
-def read_data(clean_csv, noisy_csv, frac):
-    pass
