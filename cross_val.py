@@ -80,5 +80,5 @@ print(fileName)
 
 X_num = 7000
 
-kf = KFold(n_splits=5)
-print(kf.get_n_splits(X_num))
+kf = KFold(n_splits=5, random_state=56, shuffle=True)
+print(kf)
