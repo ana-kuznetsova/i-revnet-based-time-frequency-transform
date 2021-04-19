@@ -81,7 +81,7 @@ saveName = \
 '_'+maskEstimator+lossMode+\
 '_bs'+str(batchSize)+\
 '_bpl'+str(speechLen)+\
-'_vr'+str(valRatio) + 'COSINE' + '_frac_' + str(frac)
+'_vr'+str(valRatio) + 'COSINE' + '_frac_' + str(frac) + 'cross'
 
 fileName = os.path.join(dnn_dir, saveName)
 print(fileName)
@@ -90,6 +90,8 @@ print(fileName)
 trainData, validData = tm.dataLoad(clean_dir = cleanDir, noisy_dir = noisyDir, csv_dir = csv_dir,
                                  val_ratio = valRatio, speech_per_set = speechPerSet,
                                  test_flag = testFlag, frac=frac)
+
+print(trainData)
 
 estClean = modelDifinition.iRevNetMasking( layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
 optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)

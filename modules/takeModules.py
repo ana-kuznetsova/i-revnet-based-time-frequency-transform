@@ -45,8 +45,8 @@ def dataLoad(**kwargs):
         return dataLoad_CN(**kwargs)
     
 def dataLoad_CN(clean_dir, noisy_dir, csv_dir, val_ratio, speech_per_set, test_flag, frac): 
-    df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv'))
-    df_clean = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv'))
+    df_noisy = pd.read_csv(os.path.join(csv_dir, 'noisy-train.csv')).sample(frac=1)
+    df_clean = pd.read_csv(os.path.join(csv_dir, 'clean-train.csv')).sample(frac=1)
     frac_ind = int(len(df_noisy)*frac)
     c_files = [os.path.join(clean_dir, f) for f in df_clean['path']][:frac_ind]
     c_mos = df_clean["MOS"][:frac_ind]
