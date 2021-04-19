@@ -28,7 +28,13 @@ red = 4
 maskEstimator = 'binary'
 lossMode = 'SDR'
 
+# save dnn directory
+dnn_dir  = '/nobackup/anakuzne/models/i-rev-net-mos/'
+if(os.path.isdir(dnn_dir)==False):
+    os.mkdir(dnn_dir)
+
 # training data directory
+
 cleanDir  = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
 noisyDir  = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
 csv_dir = '/nobackup/anakuzne/data/COSINE-orig/csv/'
