@@ -81,4 +81,5 @@ print(fileName)
 X_num = 7000
 
 kf = KFold(n_splits=5, random_state=56, shuffle=True)
-print(kf)
+for train_index, test_index in kf.split(X_num):
+    print("TRAIN:", train_index, "TEST:", test_index)
