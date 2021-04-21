@@ -112,4 +112,26 @@ for train_index, test_index in kf.split(X_num):
     train_noisy = list(map(noisy_fnames.__getitem__ , list(train_index)))
     train_clean = list(map(clean_fnames.__getitem__ , list(train_index)))
 
-    print(train_noisy[0], train_clean[0])
+    noisy_aud = [librosa.core.load(i, sr=16000)[0] for i in train_noisy]
+    clean_aud = [librosa.core.load(i, sr=16000)[0] for i in clean_noisy]
+
+    print("Start training...") 
+    start = time.time()
+    olddatetime = 'None' 
+    trainLoss = np.array([])
+    validLoss = np.array([])
+
+    ### Watch WANDB ###
+    #wandb.watch(estClean)
+    for epoch in range(1, maxEpoch+1):
+        sumLoss  = 0.0
+        sumSDR = 0.0
+
+        prev_batch_ind = 0
+        curr_batch_ind = 0
+        while curr_batch_ind <= len(noisy_aud):
+            curr_batch_ind+=batchSize
+            batch = noisy_aud[prev_batch_ind: min(curr_batch_ind, len(noisy_aud))]
+            prev_batch_ind = curr_batch_ind
+            sys.stdout.write('\repoch: '+str(epoch)+' Batch: '+str(curr_batch_ind//batchSize)+'/'+str(len(trainData)//batchSize)) 
+            sys.stdout.flush()
