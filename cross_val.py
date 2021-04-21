@@ -114,7 +114,7 @@ for train_index, test_index in kf.split(X_num):
     train_clean = list(map(clean_fnames.__getitem__ , list(train_index)))
 
     noisy_aud = [librosa.core.load(os.path.join(noisyDir, i), sr=16000)[0] for i in train_noisy]
-    clean_aud = [librosa.core.load(os.path.join(cleanDir, i), sr=16000)[0] for i in clean_noisy]
+    clean_aud = [librosa.core.load(os.path.join(cleanDir, i), sr=16000)[0] for i in train_clean]
 
     print("Start training...") 
     start = time.time()
