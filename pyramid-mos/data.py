@@ -83,15 +83,15 @@ def _collate_fn(batch):
 
     # to cuda device
     # get batch of lengths of input sequences
-    ilens = np.array([len(aud) for aud in aud_batch])
+    ilens = np.array([aud.shape[1] for aud in aud_batch])
     max_len = np.max(ilens)
 
     # perform padding and convert to tensor
     pad_value = 0
     # N x T
-    print(aud_batch)
     #aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
-    #ilens = torch.from_numpy(ilens)
+    aud_pad = [pad_list(aud) for aud in aud_batch]
+    print(aud_pad, ilens)
 
     return aud_pad, ilens, aud_fnames_batch, mos_scores
 
@@ -120,8 +120,9 @@ def load_mini_batch(batch):
 
 # Padding for mini-batch
 # pad to the max length in a mini-batch for every file
-def pad_list(xs, pad_value, max_len):
-    pass
+def pad_list(aud, pad_value, max_len):
+    aud_pad = np.pad(aud, ((0, 0), (0, max_len - aud.shape[1])))
+    return aud_pad
 
 
 if __name__ == "__main__":
