@@ -88,7 +88,7 @@ def _collate_fn(batch):
     # perform padding and convert to tensor
     pad_value = 0
     # N x T
-    aud_pad = pad_list([torch.tensor.float(aud) for aud in aud_batch], pad_value, max_len)
+    aud_pad = pad_list([torch.tensor(aud).float() for aud in aud_batch], pad_value, max_len)
     #ilens = torch.from_numpy(ilens)
 
     return aud_pad, ilens, aud_fnames_batch, batch_scores
