@@ -135,26 +135,11 @@ if __name__ == "__main__":
     dataset = AudioDataset('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', int(batch_size))
     data_loader = AudioDataLoader(dataset, batch_size=1,
                                   num_workers=10)
-    print(len(dataset), len(data_loader))
-    '''
+    
+    
     # Sample test on data_loader
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
-            mix_batch, ref_batch, ilens, mixfilenames, cleanfilenames = batch
-            print(i)
-            print(mix_batch.size())
-            print(ref_batch.size())
-            #print(ilens)
-
-            print(mixfilenames)
-            print(cleanfilenames)
+            aud_pad, ilens, aud_fnames_batch, batch_scores = batch
+            print(len(aud_pad), aud_fnames_batch, batch_scores)
             
-            """
-            # test write audios
-            sf.write('{}_mix.wav'.format(i), mix_batch[0,:ilens[0]], 16000)
-            sf.write('{}_ref.wav'.format(i), ref_batch[0,:ilens[0]], 16000)
-
-            sf.write('{}_mix.wav'.format(i+1), mix_batch[7,:ilens[7]], 16000)
-            sf.write('{}_ref.wav'.format(i+1), ref_batch[7,:ilens[7]], 16000)
-            """
-    '''
