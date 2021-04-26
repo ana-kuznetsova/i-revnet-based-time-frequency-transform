@@ -12,7 +12,6 @@ import json
 import math
 import numpy as np
 import librosa
-from sklearn.model_selection import train_test_split
 import pandas as pd
 
 import torch
@@ -111,6 +110,8 @@ def load_mini_batch(batch):
         mos_scores.append(batch[i][1])
 
         cur_aud, _   = librosa.load(cur_file, sr=16000)
+        cur_aud = librosa.stft(cur_aud, n_fft=512)
+        print(cur_aud.shape)
         
         aud_batch.append(cur_aud)
 
@@ -143,5 +144,5 @@ if __name__ == "__main__":
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
             aud_pad, ilens, aud_fnames_batch, batch_scores = batch
-            print(type(aud_pad[0]), type(ilens[0]))
+            
             
