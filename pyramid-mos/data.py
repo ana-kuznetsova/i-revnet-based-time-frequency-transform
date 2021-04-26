@@ -22,15 +22,9 @@ import torch.utils.data as data
 class AudioDataset(data.Dataset):
 
     def __init__(self, csv_path, batch_size, sample_rate=16000):
-        """
-        Inputs:
-            mix_flist:   mix data file list
-            clean_flist: clean data file list, must be same length as mix_flist
-            batch_size:  mini-batch size
-        """
-
         # generate minibach infomations
         df = pd.read_csv(csv_path)
+        df = df.sample(frac=1, random_state=2019)
         flist = df['path']
         mos_scores  = df['MOS']
         minibatch = []
@@ -111,8 +105,7 @@ def load_mini_batch(batch):
 
         cur_aud, _   = librosa.load(cur_file, sr=16000)
         cur_aud = librosa.stft(cur_aud, n_fft=512)
-        print(cur_aud.shape)
-        
+
         aud_batch.append(cur_aud)
 
     return aud_batch, aud_filenames, mos_scores

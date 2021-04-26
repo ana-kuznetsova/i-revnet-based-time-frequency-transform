@@ -41,22 +41,12 @@ import pandas as pd
 algo = 'bilstm_regr_attn'
 score_type = 'pesq'
 work_dir = '/nobackup/anakuzne/models/mos-predict'
-freq_dim = 321
-time_dim = 166
+#freq_dim = 321
+#time_dim = 166
 #filenames = glob(work_dir + '/../../Matlab_Project/data_place/mixDataMultilabels_5000tr_0te_Babble_13trSNR/**/*.mat')
-csv_all = pd.read_csv('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv')
-filenames = csv_all['path']
-mos_scores = csv_all['MOS']
-X_data = np.empty([len(filenames), freq_dim, time_dim]) # (batch_size, timesteps, input_dim)
-Y_data = np.empty([len(filenames)])
-    
-'''
-for idx, file in enumerate(filenames):
-    with h5py.File(file, 'r') as mat_data:  # use mat_data.keys() to check stored variables
-        X_data[idx, :, :] = np.transpose(mat_data['feats'])  # need to transpose HDF data
-        Y_data[idx] = np.array(mat_data[score_type + '_score'])
-    mat_data.close()
-'''
+
+#X_data = np.empty([len(filenames), freq_dim, time_dim]) # (batch_size, timesteps, input_dim)
+#Y_data = np.empty([len(filenames)])
     
 train_num = 7000
 test_num = 2178
