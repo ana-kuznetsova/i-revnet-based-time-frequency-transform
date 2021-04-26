@@ -120,12 +120,14 @@ def pad_list(aud, max_len):
 if __name__ == "__main__":
     import soundfile as sf
 
-    batch_size = 24 # temp tesing usage
+    batch_size = 64 # temp tesing usage
 
     # sample dataloader for testing set
     dataset = AudioDataset('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', int(batch_size))
     data_loader = AudioDataLoader(dataset, batch_size=1,
                                   num_workers=10)
+
+    print(len(data_loader))
     
     
     # Sample test on data_loader
