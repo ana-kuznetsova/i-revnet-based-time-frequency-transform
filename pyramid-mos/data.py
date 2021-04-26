@@ -87,10 +87,9 @@ def _collate_fn(batch):
     max_len = np.max(ilens)
 
     # perform padding and convert to tensor
-    pad_value = 0
     # N x T
     #aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
-    aud_pad = [pad_list(aud) for aud in aud_batch]
+    aud_pad = [pad_list(aud, max_len) for aud in aud_batch]
     print(aud_pad, ilens)
 
     return aud_pad, ilens, aud_fnames_batch, mos_scores
@@ -120,7 +119,7 @@ def load_mini_batch(batch):
 
 # Padding for mini-batch
 # pad to the max length in a mini-batch for every file
-def pad_list(aud, pad_value, max_len):
+def pad_list(aud, max_len):
     aud_pad = np.pad(aud, ((0, 0), (0, max_len - aud.shape[1])))
     return aud_pad
 
