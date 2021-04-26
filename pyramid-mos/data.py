@@ -89,7 +89,8 @@ def _collate_fn(batch):
     # perform padding and convert to tensor
     pad_value = 0
     # N x T
-    aud_pad = pad_list([torch.tensor(aud).float() for aud in aud_batch], pad_value, max_len)
+    print(aud_batch)
+    #aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
     #ilens = torch.from_numpy(ilens)
 
     return aud_pad, ilens, aud_fnames_batch, mos_scores
@@ -120,13 +121,7 @@ def load_mini_batch(batch):
 # Padding for mini-batch
 # pad to the max length in a mini-batch for every file
 def pad_list(xs, pad_value, max_len):
-
-    n_batch = len(xs)
-    pad = xs[0].new(n_batch, max_len, * xs[0].size()[1:]).fill_(pad_value)
-
-    for i in range(n_batch):
-        pad[i, :xs[i].size(0)] = xs[i]
-    return pad
+    pass
 
 
 if __name__ == "__main__":
