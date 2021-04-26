@@ -135,6 +135,7 @@ if __name__ == "__main__":
     dataset = AudioDataset('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', int(batch_size))
     data_loader = AudioDataLoader(dataset, batch_size=1,
                                   num_workers=10)
+    print(len(dataset), len(loader))
     '''
     # Sample test on data_loader
     for i, batch in enumerate(data_loader):
