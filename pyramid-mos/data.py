@@ -76,7 +76,7 @@ def _collate_fn(batch):
     assert len(batch) == 1
 
     # w/o zero padding
-    batch_scores = batch[1]
+    #batch_scores = batch[1]
     print("bscores", batch)
     batch = batch[0]
 
