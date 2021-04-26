@@ -141,5 +141,6 @@ if __name__ == "__main__":
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
             aud_pad, ilens, aud_fnames_batch, batch_scores = batch
-            print(aud_pad, ilens)
+            print(aud_fnames_batch)
+            print(batch_scores)
             
