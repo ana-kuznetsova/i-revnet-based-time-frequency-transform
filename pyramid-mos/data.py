@@ -76,9 +76,10 @@ def _collate_fn(batch):
     assert len(batch) == 1
 
     # w/o zero padding
-    batch = batch[0]
-    batch_scores = batch[-1]
+    batch_scores = batch[1]
     print("bscores", batch_scores)
+    batch = batch[0]
+
     aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
 
     # to cuda device
