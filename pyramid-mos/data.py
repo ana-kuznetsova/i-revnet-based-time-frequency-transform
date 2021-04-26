@@ -79,7 +79,6 @@ def _collate_fn(batch):
     #batch_scores = batch[1]
 
     batch = batch[0]
-    print(batch)
 
     aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
 
@@ -94,7 +93,7 @@ def _collate_fn(batch):
     aud_pad = pad_list([torch.tensor(aud).float() for aud in aud_batch], pad_value, max_len)
     #ilens = torch.from_numpy(ilens)
 
-    return aud_pad, ilens, aud_fnames_batch, batch_scores
+    return aud_pad, ilens, aud_fnames_batch, mos_scores
 
 # Utility functions
 # Loading for mini-batch
@@ -144,5 +143,5 @@ if __name__ == "__main__":
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
             aud_pad, ilens, aud_fnames_batch, batch_scores = batch
-            #print(batch_scores)
+            print(batch_scores)
             
