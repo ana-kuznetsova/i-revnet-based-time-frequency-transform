@@ -88,7 +88,7 @@ def _collate_fn(batch):
     # perform padding and convert to tensor
     pad_value = 0
     # N x T
-    aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
+    aud_pad = pad_list([torch.tensor.float(aud) for aud in aud_batch], pad_value, max_len)
     #ilens = torch.from_numpy(ilens)
 
     return aud_pad, ilens, aud_fnames_batch, batch_scores
@@ -129,20 +129,13 @@ def pad_list(xs, pad_value, max_len):
 if __name__ == "__main__":
     import soundfile as sf
 
-    # filelist for mix and clean audios
-    mix_flist_name = '../data/testing_audio_mixfile.npy'
-    clean_flist_name = '../data/testing_audio_cleanfile.npy'
-
-    mix_flist = np.load(mix_flist_name)
-    clean_flist = np.load(clean_flist_name)
-    
     batch_size = 24 # temp tesing usage
 
     # sample dataloader for testing set
-    dataset = AudioDataset(mix_flist, clean_flist, int(batch_size))
+    dataset = AudioDataset('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', int(batch_size))
     data_loader = AudioDataLoader(dataset, batch_size=1,
                                   num_workers=10)
-
+    '''
     # Sample test on data_loader
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
@@ -163,3 +156,4 @@ if __name__ == "__main__":
             sf.write('{}_mix.wav'.format(i+1), mix_batch[7,:ilens[7]], 16000)
             sf.write('{}_ref.wav'.format(i+1), ref_batch[7,:ilens[7]], 16000)
             """
+    '''
