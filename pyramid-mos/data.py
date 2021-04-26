@@ -77,8 +77,9 @@ def _collate_fn(batch):
 
     # w/o zero padding
     #batch_scores = batch[1]
-    print("bscores", batch)
+
     batch = batch[0]
+    print(batch)
 
     aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
 
