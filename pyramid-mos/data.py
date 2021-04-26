@@ -78,6 +78,7 @@ def _collate_fn(batch):
     # w/o zero padding
     batch = batch[0]
     batch_scores = batch[1]
+    print("bscores", batch_scores)
     aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
 
     # to cuda device
@@ -141,5 +142,5 @@ if __name__ == "__main__":
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
             aud_pad, ilens, aud_fnames_batch, batch_scores = batch
-            print(batch_scores)
+            #print(batch_scores)
             
