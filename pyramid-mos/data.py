@@ -140,7 +140,6 @@ if __name__ == "__main__":
     # Sample test on data_loader
     for i, batch in enumerate(data_loader):
         if i%50 == 0:
-            aud_pad, ilens, aud_fnames_batch, _, batch_scores = batch
-            print(aud_fnames_batch)
+            aud_pad, ilens, aud_fnames_batch, batch_scores = batch
             print(batch_scores)
             
