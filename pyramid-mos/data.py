@@ -13,6 +13,7 @@ import math
 import numpy as np
 import librosa
 from sklearn.model_selection import train_test_split
+import pandas as pd
 
 import torch
 import torch.utils.data as data
@@ -21,7 +22,7 @@ import torch.utils.data as data
 # Dataloader for Training/CV Data
 class AudioDataset(data.Dataset):
 
-    def __init__(self, mix_flist, clean_flist, batch_size, sample_rate=16000):
+    def __init__(self, csv_path, batch_size, sample_rate=16000):
         """
         Inputs:
             mix_flist:   mix data file list
@@ -30,15 +31,18 @@ class AudioDataset(data.Dataset):
         """
 
         # generate minibach infomations
+        df = pd.read_csv(csv_path)
+        flist = df['path']
+        mos_scores  = df['MOS']
         minibatch = []
         start = 0
         while True:
-            end = min(len(mix_flist), start + batch_size)
+            end = min(len(flist), start + batch_size)
 
-            tmp_batch = [[i,j] for i,j in zip(mix_flist[start:end],clean_flist[start:end])] # concatenate two lists
+            tmp_batch = [[i,j] for i,j in zip(flist[start:end],mos_scores[start:end])] # concatenate two lists
             minibatch.append(tmp_batch)
 
-            if end == len(mix_flist):
+            if end == len(flist):
                 break
             start = end
         self.minibatch = minibatch
@@ -73,61 +77,42 @@ def _collate_fn(batch):
 
     # w/o zero padding
     batch = batch[0]
-    mix_batch, clean_batch, mixfilenames, cleanfilenames = load_mini_batch(batch)
+    batch_scores = batch[1]
+    aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
 
     # to cuda device
     # get batch of lengths of input sequences
-    ilens = np.array([len(mix) for mix in mix_batch])
+    ilens = np.array([len(aud) for aud in aud_batch])
     max_len = np.max(ilens)
 
     # perform padding and convert to tensor
     pad_value = 0
     # N x T
-    mix_pad = pad_list([torch.from_numpy(mix).float()
-                             for mix in mix_batch], pad_value, max_len)
-    ilens = torch.from_numpy(ilens)
-    # N x T
-    clean_pad = pad_list([torch.from_numpy(c).float()
-                            for c in clean_batch], pad_value, max_len)
+    aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
+    #ilens = torch.from_numpy(ilens)
 
-    return mix_pad, clean_pad, ilens, mixfilenames, cleanfilenames
+    return aud_pad, ilens, aud_fnames_batch, batch_scores
 
 # Utility functions
 # Loading for mini-batch
 def load_mini_batch(batch):
-    """
-    Each info include wav path and wav duration.
-    Outputs:
-        mixtures: a list containing B items, each item is T np.ndarray
-        sources: a list containing B items, each item is T x C np.ndarray
-        T varies from item to item.
-    """
-    mix_batch, clean_batch  = [], []
-    mixfilenames, cleanfilenames = [], []
+    aud_batch = []
+    aud_filenames = []
+    mos_scores = []
 
     # for each utterance
     for i in range(len(batch)):
         
-        cur_mix_file   = batch[i][0] # mix audio filename
-        cur_clean_file = batch[i][1] # clean audio filename
+        cur_file   = batch[i][0] # mix audio filename
         
-        mixfilenames.append(cur_mix_file)
-        cleanfilenames.append(cur_clean_file)
-        """
-        print('mix filename')
-        print(cur_mix_file)
+        aud_filenames.append(cur_file)
+        mos_scores.append(batch[i][1])
 
-        print('clean filename')
-        print(cur_clean_file)
-        """
+        cur_aud, _   = librosa.load(cur_file, sr=16000)
         
-        cur_mix, _   = librosa.load(cur_mix_file, sr=16000)
-        cur_clean, _ = librosa.load(cur_clean_file, sr=16000)
-        
-        mix_batch.append(cur_mix)
-        clean_batch.append(cur_clean)
+        aud_batch.append(cur_aud)
 
-    return mix_batch, clean_batch, mixfilenames, cleanfilenames
+    return aud_batch, aud_filenames, mos_scores
 
 # Padding for mini-batch
 # pad to the max length in a mini-batch for every file
