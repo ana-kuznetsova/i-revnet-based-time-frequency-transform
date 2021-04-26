@@ -102,7 +102,7 @@ def load_mini_batch(batch):
         mos_scores.append(batch[i][1])
 
         cur_aud, _   = librosa.load(cur_file, sr=16000)
-        cur_aud = librosa.stft(cur_aud, n_fft=512)
+        cur_aud = 10*np.log10(librosa.stft(cur_aud, n_fft=512))
 
         aud_batch.append(cur_aud)
 
