@@ -84,8 +84,6 @@ def _collate_fn(batch):
     # N x T
     #aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
     aud_pad = [pad_list(aud, max_len) for aud in aud_batch]
-    print(aud_pad, ilens)
-
     return aud_pad, ilens, aud_fnames_batch, mos_scores
 
 # Utility functions
