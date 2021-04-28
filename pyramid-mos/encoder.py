@@ -4,6 +4,7 @@
 import torch.nn.utils.rnn as rnn
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
+import torch.nn as nn
 
 
 class pBLSTM(nn.Module):
