@@ -29,7 +29,7 @@ class Encoder(nn.Module):
     def forward(self, x, lens):
         x = torch.transpose(x, 1, -1)
         rnn_inp=pack_padded_sequence(x, lengths=lens, batch_first=True)
-        print(rnn_inp.data.shape)
+        rnn_inp.data = torch.transpose(rnn_inp.data, 0, 1)
         outputs, _=self.lstm(rnn_inp)
         print(outputs)
         linear_input, _=pad_packed_sequence(outputs)
