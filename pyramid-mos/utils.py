@@ -12,7 +12,7 @@ stack = None
 
 for f in tqdm(train):
     f, _ = librosa.core.load(f, sr=16000)
-    f = 10*np.log10(librosa.stft(f, n_fft=512))
+    f = np.abs(10*np.log10(librosa.stft(f, n_fft=512)))
     #MAXLEN = max(MAXLEN, f.shape[1])
 
     if stack is None:
