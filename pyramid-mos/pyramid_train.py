@@ -38,6 +38,6 @@ for ep in range(1, epochs+1):
     for batch in loader:
         aud = batch['aud'].to(device)
         lens = batch['lens'].to(device)
-        scores = batch['scores'].to(device)
+        scores = batch['score'].to(device)
         keys, values, lens = model(aud, lens)
         print(keys)
