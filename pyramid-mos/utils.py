@@ -15,7 +15,7 @@ for f in tqdm(train):
     f, _ = librosa.core.load(f, sr=16000)
     f = np.nan_to_num(np.abs(10*np.log10(librosa.stft(f, n_fft=512))))
     MAXLEN = max(MAXLEN, f.shape[1])
-    print(MAXLEN)
+    print(f.shape[1])
 
 print("MAXLEN:", MAXLEN)
 '''
