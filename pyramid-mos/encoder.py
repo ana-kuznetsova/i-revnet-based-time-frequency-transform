@@ -5,6 +5,7 @@ import torch.nn.utils.rnn as rnn
 from torch.utils.data import Dataset, DataLoader, TensorDataset
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 import torch.nn as nn
+import torch
 
 
 class pBLSTM(nn.Module):
@@ -26,7 +27,7 @@ class Encoder(nn.Module):
         self.value_network = nn.Linear(hidden_dim*2, key_size)
     
     def forward(self, x, lens):
-        print(x.shape, len(lens))
+        x = torch.transpose(x, 1, -1)
         rnn_inp=pack_padded_sequence(x, lengths=lens, batch_first=True)
         outputs, _=self.lstm(rnn_inp)
         print(outputs)
