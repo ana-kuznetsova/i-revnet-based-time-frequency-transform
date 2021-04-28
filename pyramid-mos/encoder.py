@@ -28,6 +28,7 @@ class Encoder(nn.Module):
     def forward(self, x, lens):
         print("Input shape:", x.shape)
         rnn_inp=pack_padded_sequence(x, lengths=lens, enforce_sorted=False)
+        print("RNN inp:", rnn_inp)
         outputs, _=self.lstm(rnn_inp)
         print(outputs)
         linear_input, _=pad_packed_sequence(outputs)
