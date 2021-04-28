@@ -9,12 +9,16 @@ train = fnames[:int(len(fnames)*0.8)]
 test = fnames[int(len(fnames)*0.8):]
 
 stack = None
+MAXLEN = 0
 
 for f in tqdm(train):
     f, _ = librosa.core.load(f, sr=16000)
     f = np.nan_to_num(np.abs(10*np.log10(librosa.stft(f, n_fft=512))))
-    #MAXLEN = max(MAXLEN, f.shape[1])
+    MAXLEN = max(MAXLEN, f.shape[1])
+    print(MAXLEN)
 
+print("MAXLEN:", MAXLEN)
+'''
     if stack is None:
         stack = f 
     else:
@@ -37,3 +41,4 @@ for f in tqdm(test):
 
 #print("MAXLEN:", MAXLEN)
 print("Mean Test:", stack.mean(), "Std Test:", stack.std())
+'''
