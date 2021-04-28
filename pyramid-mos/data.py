@@ -15,7 +15,7 @@ import librosa
 
 class Data(data.Dataset):
     def __init__(self, csv_path, mode='train'):
-        self.df = pd.read_csv(csv_path).sample(frac=1, random_state=42)
+        self.df = pd.read_csv(csv_path).sample(frac=1, random_state=42).reset_index(drop=True)
         self.train = self.df[:int(len(self.df)*0.7)]
         self.dev = self.df[int(len(self.df)*0.7):int(len(self.df)*0.8)]
         self.test = self.df[int(len(self.df)*0.8):]
