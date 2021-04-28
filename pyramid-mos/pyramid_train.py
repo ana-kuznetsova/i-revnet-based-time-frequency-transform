@@ -23,7 +23,7 @@ csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
 epochs = 100
 
 device = torch.device("cuda:1")
-model = Encoder(input_dim=257, hidden_dim=256)
+model = Encoder(input_dim=751, hidden_dim=256)
 model.to(device)
 
 criterion = nn.MSELoss()
@@ -37,9 +37,7 @@ loader = data.DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=colla
 for ep in range(1, epochs+1):
     for batch in loader:
         aud = batch['aud'].to(device)
-        print(aud.shape)
         lens = batch['lens']
-        print(lens)
         scores = batch['score'].to(device)
         keys, values, lens = model(aud, lens)
         print(keys)
