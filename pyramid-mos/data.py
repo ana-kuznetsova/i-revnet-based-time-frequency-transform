@@ -38,3 +38,17 @@ class Data(data.Dataset):
             return (self.dev['path'][idx], self.dev['MOS'][idx])
         if self.mode=='test':
             return (self.test['path'][idx], self.test['MOS'][idx])
+
+def collate_custom(batch_data, maxlen):
+    batch_aud = []
+    batch_scores = []
+    lens = []
+
+    for ex in batch_data:
+        aud, score = ex
+        aud, _ = librosa.core.load(aud, sr=16000)
+        aud = librosa.stft(aud, n_fft=512)
+        lens.append(aud.shape[1])
+        aud = nn.ZeroPad2d(padding=(0, maxlen-aud.shape[1], 0, 0))(aud)
+        batch_scores.append(score)
+    return {"aud":torch.stack(batch_aud), "lens": torch.stack(lens), "score":torch.stack(batch_scores)}
