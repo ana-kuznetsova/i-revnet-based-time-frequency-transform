@@ -23,7 +23,7 @@ csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
 epochs = 100
 
 device = torch.device("cuda:1")
-model = Encoder(input_dim=751, hidden_dim=256)
+model = Encoder(input_dim=257, hidden_dim=256)
 #model.to(device)
 
 criterion = nn.MSELoss()
