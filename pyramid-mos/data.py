@@ -39,7 +39,7 @@ class Data(data.Dataset):
         if self.mode=='test':
             return (self.test['path'][idx], self.test['MOS'][idx])
 
-def collate_custom(batch_data, maxlen):
+def collate_custom(batch_data, maxlen=751):
     batch_aud = []
     batch_scores = []
     lens = []
