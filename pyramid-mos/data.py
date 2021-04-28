@@ -1,136 +1,40 @@
- #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-
-Last modified on 03/23/2021
-@author: Zhuohuang Zhang @ Ph.D. Student at Indiana University Bloomington
-
-"""
-
-import os 
-import json
-import math
-import numpy as np
-import librosa
-import pandas as pd
-
+import torchaudio
 import torch
 import torch.utils.data as data
+import torch.nn as nn
 
 
-# Dataloader for Training/CV Data
-class AudioDataset(data.Dataset):
+import os
+import numpy as np
+from tqdm import tqdm
+import pandas as pd
+import soundfile as sfl
+import librosa
 
-    def __init__(self, csv_path, batch_size, sample_rate=16000):
-        # generate minibach infomations
-        df = pd.read_csv(csv_path)
-        df = df.sample(frac=1, random_state=2019)
-        flist = df['path']
-        mos_scores  = df['MOS']
-        minibatch = []
-        start = 0
-        while True:
-            end = min(len(flist), start + batch_size)
 
-            tmp_batch = [[i,j] for i,j in zip(flist[start:end],mos_scores[start:end])] # concatenate two lists
-            minibatch.append(tmp_batch)
 
-            if end == len(flist):
-                break
-            start = end
-        self.minibatch = minibatch
-
-    def __getitem__(self, index):
-        return self.minibatch[index]
-
+class Data(data.Dataset):
+    def __init__(self, csv_path, mode='train'):
+        self.df = pd.read_csv(csv_path).sample(frac=1, random_state=42)
+        self.train = self.df[:int(len(self.df)*0.7)]
+        self.dev = self.df[int(len(self.df)*0.7):int(len(self.df)*0.8)]
+        self.test = self.df[int(len(self.df)*0.8):]
+        self.mode = mode
+    
     def __len__(self):
-        return len(self.minibatch)
+        if self.mode=='train':
+            return len(self.train)
+        if self.mode=='dev':
+            return len(self.dev)
+        if self.mode=='test':
+            return len(self.test)
 
-# Dataloader will get batch information from Dataset object (i.e., batch of filelist)
-class AudioDataLoader(data.DataLoader):
-    """
-    NOTE: just use batchsize=1 here, so drop_last=True makes no sense here.
-    """
-
-    def __init__(self, *args, **kwargs):
-        super(AudioDataLoader, self).__init__(*args, **kwargs)
-        self.collate_fn = _collate_fn
-
-
-def _collate_fn(batch):
-    """
-    Inputs:
-        batch: list, len(batch) = 1. See AudioDataset.__getitem__()
-    Outputs:
-        mix_pad: B x T, torch.Tensor
-        refs_pad: B x C x T, torch.Tensor
-    """
-    # batch should be located in list
-    assert len(batch) == 1
-
-    # w/o zero padding
-    #batch_scores = batch[1]
-
-    batch = batch[0]
-
-    aud_batch, aud_fnames_batch, mos_scores = load_mini_batch(batch)
-
-    # to cuda device
-    # get batch of lengths of input sequences
-    ilens = np.array([aud.shape[1] for aud in aud_batch])
-    max_len = np.max(ilens)
-
-    # perform padding and convert to tensor
-    # N x T
-    #aud_pad = pad_list([aud for aud in aud_batch], pad_value, max_len)
-    aud_pad = [pad_list(aud, max_len) for aud in aud_batch]
-    return aud_pad, ilens, aud_fnames_batch, mos_scores
-
-# Utility functions
-# Loading for mini-batch
-def load_mini_batch(batch):
-    aud_batch = []
-    aud_filenames = []
-    mos_scores = []
-
-    # for each utterance
-    for i in range(len(batch)):
-        
-        cur_file   = batch[i][0] # mix audio filename
-        
-        aud_filenames.append(cur_file)
-        mos_scores.append(batch[i][1])
-
-        cur_aud, _   = librosa.load(cur_file, sr=16000)
-        cur_aud = 10*np.log10(librosa.stft(cur_aud, n_fft=512))
-
-        aud_batch.append(cur_aud)
-
-    return aud_batch, aud_filenames, mos_scores
-
-# Padding for mini-batch
-# pad to the max length in a mini-batch for every file
-def pad_list(aud, max_len):
-    aud_pad = np.pad(aud, ((0, 0), (0, max_len - aud.shape[1])))
-    return aud_pad
-
-
-if __name__ == "__main__":
-    import soundfile as sf
-
-    batch_size = 64 # temp tesing usage
-
-    # sample dataloader for testing set
-    dataset = AudioDataset('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', int(batch_size))
-    data_loader = AudioDataLoader(dataset, batch_size=1,
-                                  num_workers=10)
-
-    print(len(data_loader))
-    
-    
-    # Sample test on data_loader
-    for i, batch in enumerate(data_loader):
-        if i%50 == 0:
-            aud_pad, ilens, aud_fnames_batch, batch_scores = batch
-            
-            
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+        if self.mode=='train':
+            return (self.train['path'][idx], self.train['MOS'][idx])
+        if self.mode=='dev':
+            return (self.dev['path'][idx], self.dev['MOS'][idx])
+        if self.mode=='test':
+            return (self.test['path'][idx], self.test['MOS'][idx])
