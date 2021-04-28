@@ -8,14 +8,14 @@ fnames = pd.read_csv('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv').sample(f
 train = fnames[:int(len(fnames)*0.8)]
 test = fnames[int(len(fnames)*0.8):]
 
-stack = 0
+stack = None
 
 for f in tqdm(train):
     f, _ = librosa.core.load(f, sr=16000)
     f = 10*np.log10(librosa.stft(f, n_fft=512))
     #MAXLEN = max(MAXLEN, f.shape[1])
 
-    if stack==0:
+    if stack is None:
         stack = f 
     else:
         stack = np.concatenate((stack, f), axis=1)
@@ -23,14 +23,14 @@ for f in tqdm(train):
 
 print("Mean Train:", stack.mean(), "Std Train:", stack.std())
 
-stack = 0
+stack = None
 
 for f in tqdm(test):
     f, _ = librosa.core.load(f, sr=16000)
     f = 10*np.log10(librosa.stft(f, n_fft=512))
     #MAXLEN = max(MAXLEN, f.shape[1])
 
-    if stack==0:
+    if stack is None:
         stack = f 
     else:
         stack = np.concatenate((stack, f), axis=1)
