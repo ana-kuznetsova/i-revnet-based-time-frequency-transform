@@ -49,11 +49,13 @@ def collate_custom(batch_data, maxlen=751):
         aud, score = ex
         aud, _ = librosa.core.load(aud, sr=16000)
         aud = np.abs(10*np.log10(librosa.stft(aud, n_fft=512)))
-        aud = nn.ZeroPad2d(padding=(0, maxlen-aud.shape[1], 0, 0))(torch.tensor(aud))
         tmp.append((aud, score, aud.shape[1]))
+
     tmp = sorted(tmp, key=lambda x: x[-1], reverse=True)
     for i in tmp:
-        batch_aud.append(i[0])
+        aud = i[0]
+        aud = nn.ZeroPad2d(padding=(0, maxlen-aud.shape[1], 0, 0))(torch.tensor(aud))
+        batch_aud.append(aud)
         batch_scores.append(torch.tensor(i[1]))
         lens.append(torch.tensor(i[-1]))
     return {"aud":torch.stack(batch_aud), "lens": torch.stack(lens), "score":torch.stack(batch_scores)}
