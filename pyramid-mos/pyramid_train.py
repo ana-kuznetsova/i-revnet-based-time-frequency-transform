@@ -36,10 +36,8 @@ loader = data.DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=colla
 
 for ep in range(1, epochs+1):
     for batch in loader:
-        print(batch)
-        aud, lens, scores = batch
-        aud = aud.to(device)
-        lens = lens.to(device)
-        scores = scores.to(device)
+        aud = batch['aud'].to(device)
+        lens = batch['lens'].to(device)
+        scores = batch['scores'].to(device)
         keys, values, lens = model(aud, lens)
         print(keys)
