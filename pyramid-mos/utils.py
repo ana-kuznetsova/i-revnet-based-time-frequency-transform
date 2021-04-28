@@ -15,7 +15,7 @@ for f in tqdm(train):
     f = 10*np.log10(librosa.stft(f, n_fft=512))
     #MAXLEN = max(MAXLEN, f.shape[1])
 
-    if not stack:
+    if stack==0:
         stack = f 
     else:
         stack = np.concatenate((stack, f), axis=1)
@@ -30,7 +30,7 @@ for f in tqdm(test):
     f = 10*np.log10(librosa.stft(f, n_fft=512))
     #MAXLEN = max(MAXLEN, f.shape[1])
 
-    if not stack:
+    if stack==0:
         stack = f 
     else:
         stack = np.concatenate((stack, f), axis=1)
