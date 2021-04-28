@@ -26,8 +26,9 @@ class Encoder(nn.Module):
         self.value_network = nn.Linear(hidden_dim*2, key_size)
     
     def forward(self, x, lens):
-        print(lens)
+        print(x.shape, lens)
         rnn_inp=pack_padded_sequence(x, lengths=lens, enforce_sorted=False, batch_first=True)
+        print(rnn_inp)
         outputs, _=self.lstm(rnn_inp)
         print(outputs)
         linear_input, _=pad_packed_sequence(outputs)
