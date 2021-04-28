@@ -28,6 +28,7 @@ class Encoder(nn.Module):
   def forward(self, x, lens):
         rnn_inp=pack_padded_sequence(x, lengths=lens, enforce_sorted=False)
         outputs, _=self.lstm(rnn_inp)
+        print(outputs)
         linear_input, _=pad_packed_sequence(outputs)
         
         for i in range(3):
