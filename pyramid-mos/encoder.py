@@ -8,29 +8,30 @@ import torch.nn as nn
 
 
 class pBLSTM(nn.Module):
-  def __init__(self, input_dim, hidden_dim):
-      super(pBLSTM, self).__init__()
-      self.blstm = nn.LSTM(input_size=input_dim,hidden_size=hidden_dim,num_layers=1,bidirectional=True)
-  def forward(self,x):
-    return self.blstm(x)
+    def __init__(self, input_dim, hidden_dim):
+        super(pBLSTM, self).__init__()
+        self.blstm = nn.LSTM(input_size=input_dim,hidden_size=hidden_dim,num_layers=1,bidirectional=True)
+    def forward(self,x):
+        return self.blstm(x)
 
 
 class Encoder(nn.Module):
-  def __init__(self, input_dim, hidden_dim, value_size=128,key_size=128):
-    super(Encoder, self).__init__()
-    self.lstm = nn.LSTM(input_size=input_dim,hidden_size=hidden_dim,num_layers=1,bidirectional=True)
-    self.pBLSTM1= pBLSTM(2*hidden_dim, hidden_dim)
-    self.pBLSTM2= pBLSTM(2*hidden_dim, hidden_dim)
-    self.pBLSTM3= pBLSTM(2*hidden_dim, hidden_dim)
-    self.key_network = nn.Linear(hidden_dim*2, value_size)
-    self.value_network = nn.Linear(hidden_dim*2, key_size)
-  
-  def forward(self, x, lens):
+    def __init__(self, input_dim, hidden_dim, value_size=128,key_size=128):
+        super(Encoder, self).__init__()
+        self.lstm = nn.LSTM(input_size=input_dim,hidden_size=hidden_dim,num_layers=1,bidirectional=True)
+        self.pBLSTM1= pBLSTM(2*hidden_dim, hidden_dim)
+        self.pBLSTM2= pBLSTM(2*hidden_dim, hidden_dim)
+        self.pBLSTM3= pBLSTM(2*hidden_dim, hidden_dim)
+        self.key_network = nn.Linear(hidden_dim*2, value_size)
+        self.value_network = nn.Linear(hidden_dim*2, key_size)
+    
+    def forward(self, x, lens):
+        print("Input shape:", x.shape)
         rnn_inp=pack_padded_sequence(x, lengths=lens, enforce_sorted=False)
         outputs, _=self.lstm(rnn_inp)
         print(outputs)
         linear_input, _=pad_packed_sequence(outputs)
-        
+
         for i in range(3):
             if linear_input.shape[0]%2!=0:
                 linear_input = linear_input[:-1,:,:]
