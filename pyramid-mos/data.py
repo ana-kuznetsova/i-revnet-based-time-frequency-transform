@@ -51,5 +51,5 @@ def collate_custom(batch_data, maxlen=751):
         lens.append(aud.shape[1])
         aud = nn.ZeroPad2d(padding=(0, maxlen-aud.shape[1], 0, 0))(torch.tensor(aud))
         batch_aud.append(aud)
-        batch_scores.append(score)
+        batch_scores.append(torch.tensor(score))
     return {"aud":torch.stack(batch_aud), "lens": torch.stack(lens), "score":torch.stack(batch_scores)}
