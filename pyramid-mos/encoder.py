@@ -38,14 +38,14 @@ class Encoder(nn.Module):
             outputs = torch.mean(outputs, 2)
             outputs = torch.transpose(outputs,0,1)
             lens=lens//2
-            rnn_inp = utils.rnn.pack_padded_sequence(outputs, lengths=lens, enforce_sorted=False)
+            rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=False)
             if i==0:
                 outputs, _=self.pBLSTM1(rnn_inp)
             elif i==1:
                 outputs, _=self.pBLSTM2(rnn_inp)
             else:
                 outputs, _=self.pBLSTM3(rnn_inp)
-            linear_input, _=utils.rnn.pad_packed_sequence(outputs)
+            linear_input, _=pad_packed_sequence(outputs)
         keys = self.key_network(linear_input)
         value = self.value_network(linear_input)
 
