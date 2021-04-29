@@ -12,6 +12,7 @@ import librosa
 
 from data import Data, collate_custom
 from encoder import Encoder
+from attn import Attention
 
 
 
@@ -24,6 +25,8 @@ epochs = 100
 device = torch.device("cuda:1")
 model = Encoder(input_dim=257, hidden_dim=256)
 model.to(device)
+attention = Attention(input_dim=93, out_dim=32)
+attention.to(device)
 
 criterion = nn.MSELoss()
 criterion.to(device)
@@ -39,5 +42,5 @@ for ep in range(1, epochs+1):
         lens = batch['lens']
         scores = batch['score'].to(device)
         keys, values, queries, lens = model(aud, lens)
-        #print(keys.shape, values.shape, queries.shape)
+        attn_out = attention(queries, keys, values)
         

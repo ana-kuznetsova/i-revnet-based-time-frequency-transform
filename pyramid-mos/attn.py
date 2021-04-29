@@ -36,5 +36,10 @@ class Attention(nn.Module):
     def __init__(self, input_dim, out_dim):
         super(Attention, self).__init__()
         self.FC = nn.Linear(input_dim, out_dim)
-    def forward(self, Q, K, V):
         
+    def forward(self, Q, K, V):
+        Q = torch.transpose(Q, 0, 1)
+        V = torch.transpose(V, 0, 1)
+        V = torch.transpose(V, 1, 2)
+
+        print(Q.shape, V.shape)
