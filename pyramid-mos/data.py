@@ -77,3 +77,4 @@ if __name__ == "__main__":
 
     dataset_dev = Data(csv_path, mode='dev')
     loader_dev = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
+    print(len(loader), len(loader_dev))
