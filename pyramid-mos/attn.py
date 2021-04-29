@@ -48,4 +48,4 @@ class Attention(nn.Module):
         res = torch.bmm(attn_soft, V)
         res = torch.flatten(res, start_dim=1)
         linear_out = self.FC(res)
-        print(linear_out)
+        return linear_out
