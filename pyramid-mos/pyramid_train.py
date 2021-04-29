@@ -63,8 +63,7 @@ prev_val=99999
 
 for ep in range(1, epochs+1):
     epoch_loss = 0
-    print(len(loader))
-    for batch in loader:
+    for i, batch in enumerate(loader):
         aud = batch['aud'].to(device)
         lens = batch['lens']
         scores = batch['score'].to(device).unsqueeze(-1).float()
@@ -75,8 +74,8 @@ for ep in range(1, epochs+1):
         optimizer.step()
 
         batch_loss = batch_loss.detach().cpu().numpy()
-        print("Batch loss:", batch_loss)
         epoch_loss+=batch_loss
+        print("Step {}/{}".format(i, len(loader)))
 
     print('Epoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
