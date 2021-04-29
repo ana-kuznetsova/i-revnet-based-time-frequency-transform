@@ -1,4 +1,3 @@
-import torchaudio
 import torch
 import torch.utils.data as data
 import torch.nn as nn
@@ -40,4 +39,5 @@ for ep in range(1, epochs+1):
         lens = batch['lens']
         scores = batch['score'].to(device)
         keys, values, queries, lens = model(aud, lens)
+        print(keys.shape, values.shape, queries.shape)
         

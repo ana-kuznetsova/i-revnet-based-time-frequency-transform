@@ -28,3 +28,13 @@ def model_fun(data, **config):
     output = tf.matmul(attention, V)  # [batch_size, sequence_length, n_classes]
     return output
 '''
+import torch
+import torch.utils.data as data
+import torch.nn as nn
+
+class Attention(nn.Module):
+    def __init__(self, input_dim, out_dim):
+        super(Attention, self).__init__()
+        self.FC = nn.Linear(input_dim, out_dim)
+    def forward(self, Q, K, V):
+        
