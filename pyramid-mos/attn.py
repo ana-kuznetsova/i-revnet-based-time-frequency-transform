@@ -40,8 +40,8 @@ class Attention(nn.Module):
 
     def forward(self, Q, K, V):
         Q = torch.transpose(Q, 0, 1)
-        V = torch.transpose(V, 0, 1)
-        V = torch.transpose(V, 1, 2)
-        attn = torch.bmm(Q, V)
+        K = torch.transpose(K, 0, 1)
+        K = torch.transpose(K, 1, 2)
+        attn = torch.bmm(Q, K)
         attn_soft = self.softmax(attn)
-        print(attn_soft.shape)
+        print(V.shape)
