@@ -24,10 +24,10 @@ epochs = 100
 
 device = torch.device("cuda:1")
 model = Encoder(input_dim=257, hidden_dim=256)
-#model.to(device)
+model.to(device)
 
 criterion = nn.MSELoss()
-#criterion.to(device)
+criterion.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
@@ -36,8 +36,8 @@ loader = data.DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=colla
 
 for ep in range(1, epochs+1):
     for batch in loader:
-        aud = batch['aud']#.to(device)
+        aud = batch['aud'].to(device)
         lens = batch['lens']
         scores = batch['score'].to(device)
-        keys, values, lens = model(aud, lens)
-        print(keys.shape, values.shape)
+        keys, values, queries, lens = model(aud, lens)
+        
