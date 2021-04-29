@@ -32,7 +32,7 @@ class EncoderDecoder(nn.Module):
 
 
 ######### TRAINING LOOP ###########
-#wandb.init(project='i-rev-net-verify', entity='anakuzne')
+wandb.init(project='i-rev-net-verify', entity='anakuzne')
 
 
 
@@ -60,7 +60,7 @@ loader_dev = data.DataLoader(dataset, batch_size=batch_size, shuffle=False, coll
 best = copy.deepcopy(model.state_dict())
 prev_val=99999
 
-#wandb.watch(model)
+wandb.watch(model)
 
 for ep in range(1, epochs+1):
     epoch_loss = 0
@@ -75,13 +75,13 @@ for ep in range(1, epochs+1):
         optimizer.step()
 
         batch_loss = batch_loss.detach().cpu().numpy()
-        sys.stdout.write('\rBatch loss: '+str(batch_loss)) 
+        #sys.stdout.write('\rBatch loss: '+str(batch_loss)) 
         epoch_loss+=batch_loss
         sys.stdout.write('\nStep: '+str(i)+'/'+str(len(loader))) 
         sys.stdout.flush()
 
     print('\nEpoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
-    #wandb.log({"train_loss": epoch_loss/len(loader)})
+    wandb.log({"train_loss": epoch_loss/len(loader)})
 
     if ep%5==0:
         ##Validation
@@ -105,8 +105,8 @@ for ep in range(1, epochs+1):
             torch.save(best, os.path.join(work_dir, 'pyramid_best.pth'))
             prev_val = curr_val_loss
         
-        print('Validation loss: ', curr_val_loss)
-        #wandb.log({"val_loss": curr_val_loss})
+        print('\nEpoch:{:2} Validation loss:{:>4f}'.format(ep, float(curr_val_loss)))
+        wandb.log({"val_loss": curr_val_loss})
 
         torch.save(best, os.path.join(work_dir, "pyramid_last.pth"))
 
