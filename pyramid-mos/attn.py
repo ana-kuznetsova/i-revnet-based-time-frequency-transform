@@ -42,7 +42,7 @@ class Attention(nn.Module):
         Q = torch.transpose(Q, 0, 1)
         K = torch.transpose(K, 0, 1)
         K = torch.transpose(K, 1, 2)
-        attn = torch.bmm(Q, K)/torch.sqrt(K.shape[-1])
+        attn = torch.bmm(Q, K)/torch.sqrt(torch.tensor(K.shape[-1]))
         attn_soft = self.softmax(attn)
         V = torch.transpose(V, 0, 1)
         res = torch.bmm(attn_soft, V)
