@@ -17,7 +17,9 @@ class Data(data.Dataset):
     def __init__(self, csv_path, mode='train'):
         self.df = pd.read_csv(csv_path).sample(frac=1, random_state=42).reset_index(drop=True)
         self.train = self.df[:int(len(self.df)*0.7)]
+        print(len(self.train))
         self.dev = self.df[int(len(self.df)*0.7):int(len(self.df)*0.8)]
+        print(len(self.dev))
         self.test = self.df[int(len(self.df)*0.8):]
         self.mode = mode
     
@@ -66,3 +68,12 @@ def collate_custom(batch_data, maxlen=751):
         batch_scores.append(torch.tensor(i[1]))
         lens.append(torch.tensor(i[-1]))
     return {"aud":torch.stack(batch_aud), "lens": torch.stack(lens), "score":torch.stack(batch_scores)}
+
+if __name__ == "__main__":
+    csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
+
+    dataset = Data(csv_path, mode='train')
+    loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
+
+    dataset_dev = Data(csv_path, mode='dev')
+    loader_dev = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
