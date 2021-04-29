@@ -35,11 +35,13 @@ import torch.nn as nn
 class Attention(nn.Module):
     def __init__(self, input_dim, out_dim):
         super(Attention, self).__init__()
+        self.softmax = nn.Softmax(dim=-1)
         self.FC = nn.Linear(input_dim, out_dim)
 
     def forward(self, Q, K, V):
         Q = torch.transpose(Q, 0, 1)
         V = torch.transpose(V, 0, 1)
         V = torch.transpose(V, 1, 2)
-        c = torch.bmm(Q, V)
-        print(c.shape)
+        attn = torch.bmm(Q, V)
+        attn_soft = self.softmax(attn)
+        print(attn_soft.shape)
