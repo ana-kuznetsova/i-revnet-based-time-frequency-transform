@@ -75,7 +75,7 @@ for ep in range(1, epochs+1):
 
         batch_loss = batch_loss.detach().cpu().numpy()
         epoch_loss+=batch_loss
-        print("Step {}/{}".format(i, len(loader)))
+        print("Step {}/{}".format(i, len(loader)), flush=True)
 
     print('Epoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
