@@ -24,10 +24,10 @@ epochs = 100
 
 device = torch.device("cuda:1")
 model = Encoder(input_dim=257, hidden_dim=256)
-#model.to(device)
+model.to(device)
 
 criterion = nn.MSELoss()
-#criterion.to(device)
+criterion.to(device)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
