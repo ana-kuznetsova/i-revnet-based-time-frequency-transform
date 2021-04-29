@@ -39,6 +39,12 @@ class Data(data.Dataset):
         if self.mode=='test':
             return (self.test['path'][idx], self.test['MOS'][idx])
 
+
+def replaceZeroes(data):
+  min_nonzero = np.min(data[np.nonzero(data)])
+  data[data == 0] = min_nonzero
+  return data
+
 def collate_custom(batch_data, maxlen=751):
     batch_aud = []
     batch_scores = []
@@ -48,8 +54,8 @@ def collate_custom(batch_data, maxlen=751):
     for ex in batch_data:
         aud, score = ex
         aud, _ = librosa.core.load(aud, sr=16000)
-        aud = 10*np.nan_to_num(np.log10(librosa.stft(aud, n_fft=512)))
-        aud = np.abs(aud)
+        aud = replaceZeroes(librosa.stft(aud, n_fft=512))
+        aud = np.abs(10*np.log10(aud))
         tmp.append((aud, score, aud.shape[1]))
 
     tmp = sorted(tmp, key=lambda x: x[-1], reverse=True)
