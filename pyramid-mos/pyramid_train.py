@@ -12,6 +12,7 @@ import soundfile as sfl
 import librosa
 import wandb
 import copy
+import sys
 
 from data import Data, collate_custom
 from encoder import Encoder
@@ -75,7 +76,8 @@ for ep in range(1, epochs+1):
 
         batch_loss = batch_loss.detach().cpu().numpy()
         epoch_loss+=batch_loss
-        print("Step {}/{}".format(i, len(loader)), flush=True)
+        sys.stdout.write('\rStep: '+str(i)+'/'+str(len(loader))) 
+        sys.stdout.flush()
 
     print('Epoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
