@@ -33,10 +33,10 @@ import torch.utils.data as data
 import torch.nn as nn
 
 class Attention(nn.Module):
-    def __init__(self, input_dim, out_dim):
+    def __init__(self):
         super(Attention, self).__init__()
         self.softmax = nn.Softmax(dim=-1)
-        self.FC = nn.Linear(input_dim, out_dim)
+        self.FC = nn.Linear(11904, 1)
 
     def forward(self, Q, K, V):
         Q = torch.transpose(Q, 0, 1)
