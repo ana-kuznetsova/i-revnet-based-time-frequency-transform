@@ -75,7 +75,7 @@ for ep in range(1, epochs+1):
         optimizer.step()
 
         batch_loss = batch_loss.detach().cpu().numpy()
-        print(batch_loss)
+        sys.stdout.write('\rBatch loss: '+str(batch_loss)) 
         epoch_loss+=batch_loss
         sys.stdout.write('\rStep: '+str(i)+'/'+str(len(loader))) 
         sys.stdout.flush()
