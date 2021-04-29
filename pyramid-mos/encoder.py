@@ -33,6 +33,7 @@ class Encoder(nn.Module):
         rnn_inp=pack_padded_sequence(x, lengths=lens)
         outputs, _=self.lstm(rnn_inp)
         linear_input, _=pad_packed_sequence(outputs, total_length=751)
+        print(lens)
         print(linear_input.shape)
 
         for i in range(3):
