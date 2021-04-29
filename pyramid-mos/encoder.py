@@ -40,11 +40,11 @@ class Encoder(nn.Module):
             outputs = outputs.contiguous().view(outputs.shape[0], outputs.shape[1]//2, 2, outputs.shape[2])
             outputs = torch.mean(outputs, 2)
             outputs = torch.transpose(outputs,0,1)
-
+            print(i, outputs.shape)
             lens=lens//2
             rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=False)
             if i==0:
-                print(i, outputs.shape)
+                
                 outputs, _=self.pBLSTM1(rnn_inp)
             elif i==1:
                 outputs, _=self.pBLSTM2(rnn_inp)
