@@ -66,6 +66,7 @@ for ep in range(1, epochs+1):
 
     for batch in loader:
         aud = batch['aud'].to(device)
+        print("input:", aud.shape)
         lens = batch['lens']
         scores = batch['score'].to(device).unsqueeze(-1).float()
         pred_scores = model(aud, lens).float()
