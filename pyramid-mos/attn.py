@@ -47,5 +47,6 @@ class Attention(nn.Module):
         V = torch.transpose(V, 0, 1)
         res = torch.bmm(attn_soft, V)
         res = torch.flatten(res, start_dim=1)
+        print(res.shape)
         linear_out = self.FC(res)
         return linear_out
