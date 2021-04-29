@@ -74,6 +74,6 @@ if __name__ == "__main__":
     loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
 
     dataset_dev = Data(csv_path, mode='dev')
-    loader_dev = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
+    loader_dev = data.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_fn=collate_custom)
     for batch in loader_dev:
-        print(batch.shape)
+        print(batch['aud'].shape)
