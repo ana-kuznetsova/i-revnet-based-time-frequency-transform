@@ -32,13 +32,9 @@ class Encoder(nn.Module):
         x = torch.transpose(x, 0, 1)
         rnn_inp=pack_padded_sequence(x, lengths=lens)
         outputs, _=self.lstm(rnn_inp)
-<<<<<<< HEAD
-        linear_input, _=pad_packed_sequence(outputs)
-=======
         linear_input, _=pad_packed_sequence(outputs, total_length=751)
         print(lens)
         print(linear_input.shape)
->>>>>>> 69fd667ae042dda5b4e5fb97b1ccaa18af200ea6
 
         for i in range(3):
             if linear_input.shape[0]%2!=0:

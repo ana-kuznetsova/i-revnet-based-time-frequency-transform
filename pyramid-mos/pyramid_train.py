@@ -81,7 +81,7 @@ for ep in range(1, epochs+1):
     print('Epoch:{:2} Training loss:{:>4f}'.format(epoch, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
 
-    if epoch%5==0:
+    if ep%5==0:
         ##Validation
         overall_val_loss = 0
         for batch in loader_dev:
