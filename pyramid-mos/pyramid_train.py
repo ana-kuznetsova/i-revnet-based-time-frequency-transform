@@ -68,7 +68,7 @@ for ep in range(1, epochs+1):
     for batch in loader:
         aud = batch['aud'].to(device)
         lens = batch['lens']
-        scores = batch['score'].to(device)
+        scores = batch['score'].to(device).unsqueeze(-1)
         pred_scores = model(aud, lens)
         batch_loss = criterion(pred_scores, scores)
         optimizer.zero_grad()
