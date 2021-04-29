@@ -75,17 +75,20 @@ for ep in range(1, epochs+1):
         optimizer.step()
 
         batch_loss = batch_loss.detach().cpu().numpy()
+        print(batch_loss)
         epoch_loss+=batch_loss
         sys.stdout.write('\rStep: '+str(i)+'/'+str(len(loader))) 
         sys.stdout.flush()
 
-    print('Epoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
+    print('\rEpoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
 
     if ep%5==0:
         ##Validation
+        print("Starting validation...")
+        
         overall_val_loss = 0
-        for batch in loader_dev:
+        for i, batch in enumerate(loader_dev):
             aud = batch['aud'].to(device)
             lens = batch['lens']
             scores = batch['score'].to(device).unsqueeze(-1)
@@ -94,6 +97,9 @@ for ep in range(1, epochs+1):
 
             overall_val_loss+=batch_loss.detach().cpu().numpy()
             curr_val_loss = overall_val_loss/len(loader_dev)
+
+            sys.stdout.write('\rStep: '+str(i)+'/'+str(len(loader_dev))) 
+            sys.stdout.flush()
         
         if curr_val_loss < prev_val:
             torch.save(best, os.path.join(work_dir, 'pyramid_best.pth'))

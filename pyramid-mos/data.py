@@ -48,7 +48,7 @@ def collate_custom(batch_data, maxlen=751):
     for ex in batch_data:
         aud, score = ex
         aud, _ = librosa.core.load(aud, sr=16000)
-        aud = np.abs(10*np.log10(librosa.stft(aud, n_fft=512)))
+        aud = np.abs(10*np.log10(librosa.stft(aud, n_fft=512)).nan_to_num())
         tmp.append((aud, score, aud.shape[1]))
 
     tmp = sorted(tmp, key=lambda x: x[-1], reverse=True)
