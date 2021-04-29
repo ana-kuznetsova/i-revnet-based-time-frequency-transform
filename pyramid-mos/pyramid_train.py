@@ -1,6 +1,7 @@
 import torch
 import torch.utils.data as data
 import torch.nn as nn
+import torch.nn.init as weight_init
 
 
 import os
@@ -9,6 +10,7 @@ from tqdm import tqdm
 import pandas as pd
 import soundfile as sfl
 import librosa
+import wandb
 
 from data import Data, collate_custom
 from encoder import Encoder
@@ -27,14 +29,19 @@ class EncoderDecoder(nn.Module):
         return attn_out
 
 
-
 ######### TRAINING LOOP ###########
+wandb.init(project='i-rev-net-verify', entity='anakuzne')
+
+
 
 csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
+work_dir = '/nobackup/anakuzne/models/mos-predict/'
 epochs = 100
+batch_size = 32
 
 device = torch.device("cuda:1")
 model = EncoderDecoder(input_dim=257, hidden_dim=256)
+weight_init.xavier_normal(model)
 model.to(device)
 
 criterion = nn.MSELoss()
@@ -43,14 +50,56 @@ criterion.to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
 dataset = Data(csv_path, mode='train')
-loader = data.DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=collate_custom)
+loader = data.DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_custom)
+
+dataset_dev = Data(csv_path, mode='dev')
+loader_dev = data.DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_custom)
+
+
+best = copy.deepcopy(model.state_dict())
+prev_val=99999
+
+wandb.watch(model)
 
 for ep in range(1, epochs+1):
+    epoch_loss = 0
+
     for batch in loader:
         aud = batch['aud'].to(device)
         lens = batch['lens']
         scores = batch['score'].to(device)
         pred_scores = model(aud, lens)
         batch_loss = criterion(pred_scores, scores)
-        print(batch_loss)
+        optimizer.zero_grad()
+        batch_loss.backward()
+        optimizer.step()
+
+        batch_loss = batch_loss.detach().cpu().numpy()
+        epoch_loss+=batch_loss
+
+    print('Epoch:{:2} Training loss:{:>4f}'.format(epoch, float(epoch_loss/len(loader))))
+    wandb.log({"train_loss": epoch_loss/len(loader)})
+
+    if epoch%5==0:
+        ##Validation
+        overall_val_loss = 0
+        for batch in loader_dev:
+            aud = batch['aud'].to(device)
+            lens = batch['lens']
+            scores = batch['score'].to(device)
+            pred_scores = model(aud, lens)
+            batch_loss = criterion(pred_scores, scores)
+
+            overall_val_loss+=batch_loss.detach().cpu().numpy()
+            curr_val_loss = overall_val_loss/len(loader_dev)
+        
+        if curr_val_loss < prev_val:
+            torch.save(best, os.path.join(work_dir, 'pyramid_best.pth'))
+            prev_val = curr_val_loss
+        
+        print('Validation loss: ', curr_val_loss)
+        wandb.log({"val_loss": curr_val_loss})
+
+        torch.save(best, os.path.join(work_dir, "pyramid_last.pth"))
+
         
