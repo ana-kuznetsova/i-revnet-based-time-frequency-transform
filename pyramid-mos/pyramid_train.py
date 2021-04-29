@@ -25,7 +25,7 @@ epochs = 100
 device = torch.device("cuda:1")
 model = Encoder(input_dim=257, hidden_dim=256)
 model.to(device)
-attention = Attention(input_dim=93, out_dim=32)
+attention = Attention(input_dim=128, out_dim=1)
 attention.to(device)
 
 criterion = nn.MSELoss()

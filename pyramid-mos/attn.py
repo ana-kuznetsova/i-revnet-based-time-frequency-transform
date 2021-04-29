@@ -46,4 +46,5 @@ class Attention(nn.Module):
         attn_soft = self.softmax(attn)
         V = torch.transpose(V, 0, 1)
         res = torch.bmm(attn_soft, V)
-        print(res.shape)
+        linear_out = self.FC(res)
+        print(linear_out.shape)
