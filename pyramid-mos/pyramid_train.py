@@ -11,6 +11,7 @@ import pandas as pd
 import soundfile as sfl
 import librosa
 import wandb
+import copy
 
 from data import Data, collate_custom
 from encoder import Encoder
