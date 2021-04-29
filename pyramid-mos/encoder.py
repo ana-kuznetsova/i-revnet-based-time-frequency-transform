@@ -49,6 +49,7 @@ class Encoder(nn.Module):
             else:
                 outputs, _=self.pBLSTM3(rnn_inp)
             linear_input, _=pad_packed_sequence(outputs)
+        print("lin:", linear_input.shape)
         keys = self.key_network(linear_input)
         value = self.value_network(linear_input)
         query = self.query_network(linear_input)
