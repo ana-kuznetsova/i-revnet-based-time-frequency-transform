@@ -48,5 +48,7 @@ class Attention(nn.Module):
         res = torch.bmm(attn_soft, V)
         res = torch.flatten(res, start_dim=1)
         print("Flattened:", res.shape)
+        if res.shape[-1] < 11904:
+            res = nn.ZeroPad2d(padding=(0, 11904-res.shape[-1], 0, 0))(res)
         linear_out = self.FC(res)
         return linear_out
