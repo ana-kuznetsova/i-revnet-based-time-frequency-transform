@@ -66,7 +66,6 @@ for ep in range(1, epochs+1):
 
     for batch in loader:
         aud = batch['aud'].to(device)
-        print("input:", aud.shape)
         lens = batch['lens']
         scores = batch['score'].to(device).unsqueeze(-1).float()
         pred_scores = model(aud, lens).float()
@@ -78,7 +77,7 @@ for ep in range(1, epochs+1):
         batch_loss = batch_loss.detach().cpu().numpy()
         epoch_loss+=batch_loss
 
-    print('Epoch:{:2} Training loss:{:>4f}'.format(epoch, float(epoch_loss/len(loader))))
+    print('Epoch:{:2} Training loss:{:>4f}'.format(ep, float(epoch_loss/len(loader))))
     #wandb.log({"train_loss": epoch_loss/len(loader)})
 
     if ep%5==0:

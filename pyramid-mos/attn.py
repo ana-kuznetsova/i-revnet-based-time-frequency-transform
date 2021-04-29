@@ -39,7 +39,6 @@ class Attention(nn.Module):
         self.FC = nn.Linear(11904, 1)
 
     def forward(self, Q, K, V):
-        print(Q.shape, K.shape, V.shape)
         Q = torch.transpose(Q, 0, 1)
         K = torch.transpose(K, 0, 1)
         K = torch.transpose(K, 1, 2)
@@ -47,8 +46,6 @@ class Attention(nn.Module):
         attn_soft = self.softmax(attn)
         V = torch.transpose(V, 0, 1)
         res = torch.bmm(attn_soft, V)
-        print(res.shape)
         res = torch.flatten(res, start_dim=1)
-        print(res.shape)
         linear_out = self.FC(res)
         return linear_out
