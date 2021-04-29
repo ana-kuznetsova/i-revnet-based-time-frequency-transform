@@ -31,7 +31,7 @@ class Encoder(nn.Module):
         x = torch.transpose(x, 1, -1)
         rnn_inp=pack_padded_sequence(x, lengths=lens, batch_first=True)
         outputs, _=self.lstm(rnn_inp)
-        linear_input, _=pad_packed_sequence(outputs, total_length=751)
+        linear_input, _=pad_packed_sequence(outputs, batch_first=True, total_length=751)
         print(linear_input.shape)
 
         for i in range(3):
