@@ -39,6 +39,7 @@ class Attention(nn.Module):
         self.FC = nn.Linear(11904, 1)
 
     def forward(self, Q, K, V):
+        print(Q.shape, K.shape, V.shape)
         Q = torch.transpose(Q, 0, 1)
         K = torch.transpose(K, 0, 1)
         K = torch.transpose(K, 1, 2)
