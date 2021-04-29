@@ -54,7 +54,7 @@ dataset = Data(csv_path, mode='train')
 loader = data.DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_custom)
 
 dataset_dev = Data(csv_path, mode='dev')
-loader_dev = data.DataLoader(dataset, batch_size=batch_size, shuffle=False, collate_fn=collate_custom)
+loader_dev = data.DataLoader(dataset_dev, batch_size=batch_size, shuffle=False, collate_fn=collate_custom)
 
 
 best = copy.deepcopy(model.state_dict())
