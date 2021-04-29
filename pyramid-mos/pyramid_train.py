@@ -41,7 +41,7 @@ batch_size = 32
 
 device = torch.device("cuda:1")
 model = EncoderDecoder(input_dim=257, hidden_dim=256)
-weight_init.xavier_normal(model)
+#weight_init.xavier_normal(model)
 model.to(device)
 
 criterion = nn.MSELoss()
