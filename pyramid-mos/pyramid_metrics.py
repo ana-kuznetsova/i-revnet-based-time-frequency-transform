@@ -56,5 +56,5 @@ def inference(csv_dir, work_dir):
         print(scores, pred_scores)
 
 
-if __name__ == "__main__":
-    inference("/nobackup/anakuzne/data/COSINE-orig/csv/all.csv", "/nobackup/anakuzne/models/mos-predict/")
+
+inference("/nobackup/anakuzne/data/COSINE-orig/csv/all.csv", "/nobackup/anakuzne/models/mos-predict/")
