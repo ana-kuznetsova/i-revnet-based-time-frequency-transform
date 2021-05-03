@@ -56,7 +56,7 @@ def Spearman(true_scores, pred_scores):
 def inference(csv_dir, work_dir):
     device = torch.device("cuda:1")
     model = EncoderDecoder(input_dim=257, hidden_dim=256)
-    model.load_state_dict(torch.load(os.path.join(work_dir, "pyramid_best.pth")))
+    model.load_state_dict(torch.load(os.path.join(work_dir, "pyramid_last.pth")))
     model = model.to(device)
 
 
