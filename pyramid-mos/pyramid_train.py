@@ -22,7 +22,7 @@ from attn import Attention
 class EncoderDecoder(nn.Module):
     def __init__(self, input_dim, hidden_dim):
         super(EncoderDecoder, self).__init__()
-        self.bnorm = nn.BatchNorm1D(input_dim)
+        self.bnorm = nn.BatchNorm1d(input_dim)
         self.encoder = Encoder(input_dim, hidden_dim)
         self.attn_decoder = Attention()
 
