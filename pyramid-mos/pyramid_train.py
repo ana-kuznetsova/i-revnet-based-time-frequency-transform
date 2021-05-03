@@ -22,17 +22,19 @@ from attn import Attention
 class EncoderDecoder(nn.Module):
     def __init__(self, input_dim, hidden_dim):
         super(EncoderDecoder, self).__init__()
+        self.bnorm = nn.BatchNorm1D(input_dim)
         self.encoder = Encoder(input_dim, hidden_dim)
         self.attn_decoder = Attention()
 
     def forward(self, x, lens):
+        x = self.bnorm(x)
         K, V, Q, lens = self.encoder(x, lens)
         attn_out = self.attn_decoder(Q, K, V)
         return attn_out
 
 
 ######### TRAINING LOOP ###########
-'''
+
 wandb.init(project='i-rev-net-verify', entity='anakuzne')
 
 
@@ -110,5 +112,3 @@ for ep in range(1, epochs+1):
         wandb.log({"val_loss": curr_val_loss})
 
         torch.save(best, os.path.join(work_dir, "pyramid_last.pth"))
-
-'''
