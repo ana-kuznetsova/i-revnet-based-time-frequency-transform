@@ -78,8 +78,10 @@ def inference(csv_dir, work_dir):
         true_scores.append(y_i.detach().cpu().numpy())
         pred_scores.append(pred_y_i.detach().cpu().numpy())
 
-    true_scores = np.array(true_scores)
-    pred_scores = np.array(pred_scores)
+    
+
+    true_scores = np.concatenate(true_scores, axis=0)
+    pred_scores = np.concatenate(pred_scores, axis=0)
     
     print(true_scores.shape, pred_scores.shape)
 
