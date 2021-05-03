@@ -81,7 +81,7 @@ def inference(csv_dir, work_dir):
     true_scores = np.array(true_scores)
     pred_scores = np.array(pred_scores)
     
-    print(y_i.shape, pred_y_i.shape)
+    print(true_scores.shape, pred_scores.shape)
 
     print("Calculating metrics...")
 
