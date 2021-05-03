@@ -16,17 +16,41 @@ from data import Data, collate_custom
 from pyramid_train import EncoderDecoder
 
 
-def MAE():
-    pass
+def MAE(true_scores, pred_scores):
+    err = torch.sum(torch.abs(pred_scores - true_scores))/len(true_scores)
+    return err
 
-def RMSE():
-    pass
+def RMSE(true_scores, pred_scores, device):
+    MSE = nn.MSELoss()
+    MSE.to(device)
 
-def Pearson():
-    pass
+    err = torch.sqrt(MSE(pred_scores, true_scores))
+    return err
 
-def Spearman():
-    pass
+def Pearson(true_scores, pred_scores):
+    true_mean = torch.mean(true_scores)
+    pred_mean = torch.mean(pred_scores)
+
+    tmp1 = torch.sum((true_scores-true_mean)*(pred_scores-pred_mean))
+    tmp2 = torch.sqrt(torch.sum((true_scores-true_mean)**2)*torch.sum((pred_scores-pred_mean)**2))
+    corr = tmp1/tmp2
+    return corr
+
+def Spearman(true_scores, pred_scores):
+
+    def _get_ranks(x):
+        tmp = x.argsort()
+        ranks = torch.zeros_like(tmp)
+        ranks[tmp] = torch.arange(len(x))
+        return ranks
+
+    x_rank = _get_ranks(true_scores)
+    y_rank = _get_ranks(pred_scores)
+    
+    n = true_scores.size(0)
+    upper = 6 * torch.sum((x_rank - y_rank).pow(2))
+    down = n * (n ** 2 - 1.0)
+    return 1.0 - (upper / down)
 
 
 
@@ -35,10 +59,6 @@ def inference(csv_dir, work_dir):
     model = EncoderDecoder(input_dim=257, hidden_dim=256)
     model.load_state_dict(torch.load(os.path.join(work_dir, "pyramid_best.pth")))
     model = model.to(device)
-   
-
-    MSE = nn.MSELoss()
-    MSE.to(device)
 
 
     dataset = Data(csv_dir, mode='test')
@@ -47,13 +67,33 @@ def inference(csv_dir, work_dir):
     print("Starting inference...")
     print("Test size: ", len(loader)*32)
 
+    true_scores = []
+    pred_scores = []
+
     for batch in tqdm(loader):
         aud = batch['aud'].to(device)
         lens = batch['lens']
-        scores = batch['score'].to(device).unsqueeze(-1).float()
-        pred_scores = model(aud, lens).float()
+        y_i = batch['score'].to(device).unsqueeze(-1).float()
+        pred_y_i = model(aud, lens).float()
 
-        print(scores, pred_scores)
+        true_scores.append(y_i)
+        pred_scores.append(pred_y_i)
+
+    true_scores = torch.stack(true_scores)
+    pred_scores = torch.stack(pred_scores)
+
+    print("Calculating metrics...")
+
+    mean_abs_err = MAE(true_scores, pred_scores).detach().cpu().numpy()
+    r_mean_sq_err = RMSE(true_scores, pred_scores, device).detach().cpu().numpy()
+    PCC = Pearson(true_scores, pred_scores).detach().cpu().numpy()
+    SCC = Spearman(true_scores, pred_scores).detach().cpu().numpy()
+
+    print("MAE: {:>3f}\nrMSE: {:>3f}\nPCC: {:>3f}\nSCC: {:>3f}".format(mean_abs_err, r_mean_sq_err, PCC, SCC))
+
+
+
+
 
 
 
