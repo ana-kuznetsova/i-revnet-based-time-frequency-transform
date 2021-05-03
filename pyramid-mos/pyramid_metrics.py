@@ -75,6 +75,8 @@ def inference(csv_dir, work_dir):
         y_i = batch['score'].to(device).unsqueeze(-1).float()
         pred_y_i = model(aud, lens).float()
 
+        print(y_i.shape, pred_y_i.shape)
+
         true_scores.append(y_i.detach().cpu().numpy())
         pred_scores.append(pred_y_i.detach().cpu().numpy())
 
