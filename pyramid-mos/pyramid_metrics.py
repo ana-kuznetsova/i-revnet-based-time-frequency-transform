@@ -18,7 +18,7 @@ from pyramid_train import EncoderDecoder
 
 
 def MAE(true_scores, pred_scores):
-    err = np.sum(torch.abs(pred_scores - true_scores))/len(true_scores)
+    err = np.sum(np.abs(pred_scores - true_scores))/len(true_scores)
     return err
 
 def RMSE(true_scores, pred_scores):
