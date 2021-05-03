@@ -78,8 +78,8 @@ def inference(csv_dir, work_dir):
         true_scores.append(y_i.detach().cpu().numpy())
         pred_scores.append(pred_y_i.detach().cpu().numpy())
 
-    true_scores = torch.stack(true_scores)
-    pred_scores = torch.stack(pred_scores)
+    true_scores = np.array(true_scores)
+    pred_scores = np.array(pred_scores)
 
     print("Calculating metrics...")
 
