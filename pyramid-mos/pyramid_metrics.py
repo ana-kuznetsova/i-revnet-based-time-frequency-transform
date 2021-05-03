@@ -52,7 +52,8 @@ def inference(csv_dir, work_dir):
         lens = batch['lens']
         scores = batch['score'].to(device).unsqueeze(-1).float()
         pred_scores = model(aud, lens).float()
-    
+
+        print(scores, pred_scores)
 
 
 if __name__ == "__main__":
