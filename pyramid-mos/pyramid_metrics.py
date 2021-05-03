@@ -11,28 +11,27 @@ import librosa
 from tqdm import tqdm
 import copy
 import sys
+from scipy.stats import spearmanr
 
 from data import Data, collate_custom
 from pyramid_train import EncoderDecoder
 
 
 def MAE(true_scores, pred_scores):
-    err = torch.sum(torch.abs(pred_scores - true_scores))/len(true_scores)
+    err = np.sum(torch.abs(pred_scores - true_scores))/len(true_scores)
     return err
 
-def RMSE(true_scores, pred_scores, device):
-    MSE = nn.MSELoss()
-    MSE.to(device)
-
-    err = torch.sqrt(MSE(pred_scores, true_scores))
+def RMSE(true_scores, pred_scores):
+    mse = ((true_scores - pred_scores)**2).mean()
+    err = np.sqrt(mse)
     return err
 
 def Pearson(true_scores, pred_scores):
-    true_mean = torch.mean(true_scores)
-    pred_mean = torch.mean(pred_scores)
+    true_mean = np.mean(true_scores)
+    pred_mean = np.mean(pred_scores)
 
-    tmp1 = torch.sum((true_scores-true_mean)*(pred_scores-pred_mean))
-    tmp2 = torch.sqrt(torch.sum((true_scores-true_mean)**2)*torch.sum((pred_scores-pred_mean)**2))
+    tmp1 = np.sum((true_scores-true_mean)*(pred_scores-pred_mean))
+    tmp2 = np.sqrt(np.sum((true_scores-true_mean)**2)*np.sum((pred_scores-pred_mean)**2))
     corr = tmp1/tmp2
     return corr
 
@@ -76,18 +75,18 @@ def inference(csv_dir, work_dir):
         y_i = batch['score'].to(device).unsqueeze(-1).float()
         pred_y_i = model(aud, lens).float()
 
-        true_scores.append(y_i)
-        pred_scores.append(pred_y_i)
+        true_scores.append(y_i.detach().cpu().numpy())
+        pred_scores.append(pred_y_i.detach().cpu().numpy())
 
     true_scores = torch.stack(true_scores)
     pred_scores = torch.stack(pred_scores)
 
     print("Calculating metrics...")
 
-    mean_abs_err = MAE(true_scores, pred_scores).detach().cpu().numpy()
-    r_mean_sq_err = RMSE(true_scores, pred_scores, device).detach().cpu().numpy()
-    PCC = Pearson(true_scores, pred_scores).detach().cpu().numpy()
-    SCC = Spearman(true_scores, pred_scores).detach().cpu().numpy()
+    mean_abs_err = MAE(true_scores, pred_scores)
+    r_mean_sq_err = RMSE(true_scores, pred_scores)
+    PCC = Pearson(true_scores, pred_scores)
+    SCC, p = spearmanr(true_scores, pred_scores)
 
     print("MAE: {:>3f}\nrMSE: {:>3f}\nPCC: {:>3f}\nSCC: {:>3f}".format(mean_abs_err, r_mean_sq_err, PCC, SCC))
 
