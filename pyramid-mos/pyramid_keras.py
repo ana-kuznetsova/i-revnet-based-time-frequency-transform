@@ -133,3 +133,14 @@ def train_model(
                                  callbacks = callbacks_list)
 
     return model, history
+
+
+epochs_num = 100 
+batch_num = 24
+
+freq_dim = 257 
+time_dim = 751
+IN_shape = (time_dim, freq_dim) 
+
+model = create_model(IN_shape)
+train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
