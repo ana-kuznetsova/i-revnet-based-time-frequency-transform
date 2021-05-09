@@ -116,7 +116,7 @@ def train_model(
     
     callbacks_list = [mcp, rlr]
 
-    df = pd.load_csv(df_path)
+    df = pd.read_csv(df_path)
 
     train = df[:int(len(df)*0.8)]
     test = df[int(len(df)*0.8):].reset_index()
