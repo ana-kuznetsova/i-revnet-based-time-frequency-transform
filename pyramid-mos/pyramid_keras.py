@@ -147,9 +147,9 @@ freq_dim = 257
 time_dim = 751
 IN_shape = (time_dim, freq_dim) 
 
-model = create_model(IN_shape)
-train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
-'''
+#model = create_model(IN_shape)
+#train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
+
 df = pd.read_csv('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv')
 
 train = df[:int(len(df)*0.8)]
@@ -161,5 +161,4 @@ training_gen = DataGenerator(train, batch_size=batch_num)
 validation_gen = DataGenerator(dev, batch_size=batch_num)
 
 for batch in training_gen:
-    print(batch)
-'''
+    print(batch[0].shape, batch[-1].shape)
