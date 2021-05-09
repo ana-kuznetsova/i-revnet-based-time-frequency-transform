@@ -12,6 +12,9 @@ from tensorflow.keras.layers import Input, Dense, Activation, Flatten, LSTM, Bat
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.compat.v1.keras.backend import set_session
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
 tf.config.list_physical_devices('GPU')
 
 
@@ -140,6 +143,10 @@ batch_num = 24
 freq_dim = 257 
 time_dim = 751
 IN_shape = (time_dim, freq_dim) 
+
+config = tf.compat.v1.ConfigProto()
+sess = tf.compat.v1.Session(config=config)
+set_session(sess)  
 
 model = create_model(IN_shape)
 train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
