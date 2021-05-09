@@ -12,8 +12,7 @@ from tensorflow.keras.layers import Input, Dense, Activation, Flatten, LSTM, Bat
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.compat.v1.keras.backend import set_session
-
-K.tensorflow_backend._get_available_gpus()
+tf.config.list_physical_devices('GPU')
 
 
 class DataGenerator(keras.utils.Sequence):
