@@ -39,7 +39,7 @@ class DataGenerator(keras.utils.Sequence):
     
     def collate(self, fpath, maxlen=751):
         audio, _ = librosa.core.load(fpath, sr=16000)
-        audio = self.replaceZeroes(librosa.stft(audio, n_fft=512))
+        audio = self.replaceZeroes(np.abs(librosa.stft(audio, n_fft=512)))
         audio = 10*np.log10(audio)
         audio = np.pad(audio, ((0, 0), (0, maxlen-audio.shape[1])))
         return audio
