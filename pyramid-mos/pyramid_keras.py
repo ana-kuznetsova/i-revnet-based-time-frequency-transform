@@ -144,9 +144,12 @@ freq_dim = 257
 time_dim = 751
 IN_shape = (time_dim, freq_dim) 
 
-config = tf.compat.v1.ConfigProto()
-sess = tf.compat.v1.Session(config=config)
-set_session(sess)  
+#config = tf.compat.v1.ConfigProto()
+#sess = tf.compat.v1.Session(config=config)
+#set_session(sess)  
+config = ConfigProto()
+config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
 
 model = create_model(IN_shape)
 train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
