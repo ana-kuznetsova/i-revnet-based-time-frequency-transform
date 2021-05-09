@@ -52,7 +52,7 @@ class DataGenerator(keras.utils.Sequence):
         for f in batch_x:
             x = self.collate(f)
             X.append(x)
-        return np.array(X), np.array(batch_y)
+        return np.array(X), np.array([float(i) for i in batch_y])
 
 def create_model(
         IN_shape,
