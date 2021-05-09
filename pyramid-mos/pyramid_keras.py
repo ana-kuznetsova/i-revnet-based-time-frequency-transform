@@ -100,7 +100,7 @@ def train_model(
         batch_num, 
         epochs_num
         ):
-    
+    model_save_path = '/nobackup/anakuzne/models/mos-predict/'
     best_model_save_path = model_save_path + '/best_model.h5' 
 
     mcp = ModelCheckpoint(
