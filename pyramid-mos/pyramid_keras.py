@@ -16,6 +16,9 @@ from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 
 tf.config.list_physical_devices('GPU')
+config = ConfigProto()
+config.gpu_options.allow_growth = True
+session = InteractiveSession(config=config)
 
 
 class DataGenerator(keras.utils.Sequence):
@@ -147,9 +150,6 @@ IN_shape = (time_dim, freq_dim)
 #config = tf.compat.v1.ConfigProto()
 #sess = tf.compat.v1.Session(config=config)
 #set_session(sess)  
-config = ConfigProto()
-config.gpu_options.allow_growth = True
-session = InteractiveSession(config=config)
 
 model = create_model(IN_shape)
 train_model('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv', model, batch_num, epochs_num)
