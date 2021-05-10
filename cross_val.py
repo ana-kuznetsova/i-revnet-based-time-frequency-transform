@@ -59,4 +59,6 @@ class Data(data.Dataset):
 dataset = Data(clean_path='/nobackup/anakuzne/data/COSINE-orig/clean-train',
                noisy_path='/nobackup/anakuzne/data/COSINE-orig/noisy-train', mode='train')
 
-print(len(dataset))
+loader = data.DataLoader(dataset, batch_size=None, shuffle=True, collate_fn=None)
+for ex in loader:
+    print(ex)
