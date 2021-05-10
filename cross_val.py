@@ -15,7 +15,7 @@ class Data(data.Dataset):
     def __init__(self, clean_path, noisy_path, mode='train'):
         self.cnames = [os.path.join(clean_path, n) for n in os.listdir(clean_path)]
         self.nnames = [os.path.join(noisy_path, n) for n in os.listdir(noisy_path)]
-        self.df = random.sample([(i, j) for i, j in zip(self.cnames, self.nnames)])
+        self.df = random.sample([(i, j) for i, j in zip(self.cnames, self.nnames)], len(self.cnames))
         self.train = self.df[:int(len(self.df)*0.7)]
         self.dev = self.df[int(len(self.df)*0.7):int(len(self.df)*0.8)]
         self.test = self.df[int(len(self.df)*0.8):]
