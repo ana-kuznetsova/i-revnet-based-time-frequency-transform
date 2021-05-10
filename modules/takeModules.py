@@ -22,9 +22,9 @@ def list_to_gpu(cpuList, deviceNum):
     scoreList = []
     for ii in range(len(cpuList)):
         aud = cpuList[ii][0]
-        scores = (cpuList[ii][1], cpuList[ii][-1]) 
+        #scores = (cpuList[ii][1], cpuList[ii][-1]) 
         gpuList.append( torch.from_numpy(aud).float().cuda(deviceNum))
-        scoreList.append(scores)
+        #scoreList.append(scores)
     return gpuList, scoreList
 
 #####################################################################
