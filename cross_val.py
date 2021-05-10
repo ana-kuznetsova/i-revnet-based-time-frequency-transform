@@ -46,7 +46,9 @@ class Data(data.Dataset):
             return clean,  noisy
 
 
-def collate_fn(clean_path, noisy_path):
+def collate_fn(data):
+    clean_path = data[0]
+    noisy_path = data[1]
     clean, _ = librosa.core.load(clean_path, sr=16000)
     noisy, _ = librosa.core.load(noisy_path, sr=16000)
     res = np.concatenate([clean, noisy], axis=1)
