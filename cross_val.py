@@ -59,5 +59,4 @@ class Data(data.Dataset):
 dataset = Data(clean_path='/nobackup/anakuzne/data/COSINE-orig/clean-train',
                noisy_path='/nobackup/anakuzne/data/COSINE-orig/noisy-train', mode='train')
 
-for ex in dataset:
-    print(ex)
+print(len(dataset))
