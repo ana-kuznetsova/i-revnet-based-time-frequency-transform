@@ -49,8 +49,10 @@ class Data(data.Dataset):
 def collate_fn(data):
     clean_path = data[0]
     noisy_path = data[1]
+    print(clean_path, noisy_path)
     clean, _ = librosa.core.load(clean_path, sr=16000)
     noisy, _ = librosa.core.load(noisy_path, sr=16000)
+    print(clean.shape, noisy.shape)
     res = np.concatenate([clean, noisy], axis=1)
     return torch.tensor(res)
 
