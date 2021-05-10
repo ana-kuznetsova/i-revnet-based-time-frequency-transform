@@ -53,7 +53,7 @@ def collate_fn(data):
     clean, _ = librosa.core.load(clean_path, sr=16000)
     noisy, _ = librosa.core.load(noisy_path, sr=16000)
     print(clean.shape, noisy.shape)
-    res = np.concatenate([clean, noisy], axis=1)
+    res = np.concatenate([clean, noisy])
     return torch.tensor(res)
 
 dataset = Data(clean_path='/nobackup/anakuzne/data/COSINE-orig/clean-train',
