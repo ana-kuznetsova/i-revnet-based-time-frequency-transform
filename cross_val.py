@@ -104,8 +104,8 @@ def train(model, optimizer,
             sys.stdout.flush()
             
             batchNum = len(train_loader)//batchSize
+            print(batchNum)
             for utter in range(batchNum):
-                print(utter)
                 optimizer.zero_grad()
                 s = torch.from_numpy(np.array([])).float().reshape((0, speechLen)).cuda(deviceNum)
                 x = torch.from_numpy(np.array([])).float().reshape((0, speechLen)).cuda(deviceNum)
