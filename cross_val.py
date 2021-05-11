@@ -97,7 +97,7 @@ def train(model, train_loader, val_loader=None, maxEpoch=500):
         sumSDR = 0.0
 
         for setNum in range(len(train_loader)):
-            sys.stdout.write('\repoch: '+str(epoch)+' TrnSet: '+str(setNum+1)+'/'+str(len(trainData))) 
+            sys.stdout.write('\repoch: '+str(epoch)+' TrnSet: '+str(setNum+1)+'/'+str(len(train_loader))) 
             sys.stdout.flush()
             
             batchNum = len(train_loader)//batchSize
