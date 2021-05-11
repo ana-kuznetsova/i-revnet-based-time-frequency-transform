@@ -187,8 +187,17 @@ def train(model, train_loader):
 
 #####main func######
 
-dataset = Data(clean_path='/nobackup/anakuzne/data/COSINE-orig/clean-train',
-               noisy_path='/nobackup/anakuzne/data/COSINE-orig/noisy-train')
+clean_path = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
+noisy_path = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
+
+fclean = os.listdir(clean_path)
+fclean = [os.path.join(i, clean_path) for i in fclean]
+
+fmix = os.listdir(noisy_path)
+fmix = [os.path.join(i, noisy_path) for i in fmix]
+
+dataset = Data(clean_paths=fclean,
+               noisy_paths=fmix)
 train_loader = torch.utils.data.DataLoader(train_set, batch_size=None, shuffle=True, collate_fn=collate_fn)
 
 for i in train_loader:
