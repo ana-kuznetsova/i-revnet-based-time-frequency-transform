@@ -91,7 +91,7 @@ def init_model(layerNum=6, filt ='UNet5SpecNorm',
     return estClean, optimizer, lossFunc
 
 
-def train(model, train_loader, val_loader=None, maxEpoch=500, batchSize=16):
+def train(model, optimizer, criterion, train_loader, val_loader=None, maxEpoch=500, batchSize=16):
     for epoch in range(1, maxEpoch+1):
         sumLoss  = 0.0
         sumSDR = 0.0
@@ -219,6 +219,6 @@ dataset = Data(clean_paths=cnames,
                noisy_paths=xnames)
 
 train_loader = torch.utils.data.DataLoader(dataset, batch_size=None, shuffle=True, collate_fn=collate_fn)
-model = init_model()
+model, optimizer, criterion = init_model()
 
-train(model, train_loader)
+train(model, optimizer, criterion, train_loader)
