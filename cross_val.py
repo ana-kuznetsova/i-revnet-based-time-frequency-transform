@@ -198,6 +198,8 @@ fmix = [os.path.join(i, noisy_path) for i in fmix]
 
 dataset = Data(clean_paths=fclean,
                noisy_paths=fmix)
+
+print(fclean[:10], fmix[:10])
 train_loader = torch.utils.data.DataLoader(dataset, batch_size=None, shuffle=True, collate_fn=collate_fn)
 
 for i in train_loader:
