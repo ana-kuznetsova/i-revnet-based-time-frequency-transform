@@ -70,9 +70,20 @@ def crossvalid(model=None,criterion=None,optimizer=None,dataset=None,k_fold=5):
     
     return train_score,val_score
 
+def init_model(layerNum=6, filt ='UNet5SpecNorm', 
+              maskEstimator='binary', lossMode='SDR', 
+              lr_init=0.0001, initPad=red-1, deviceNum=1):
+    estClean = modelDifinition.iRevNetMasking(layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
+    optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)
+    lossFunc = eval('myLF.'+lossMode)
+    
+    for param in estClean.parameters():
+        nn.init.normal_(param, 0.0, 0.001)
+
+    return estClean, optimizer, lossFunc
 
 
-def train(model, train_loader):
+def train(model, train_loader, val_loader=None):
     for epoch in range(1, maxEpoch+1):
         sumLoss  = 0.0
         sumSDR = 0.0
@@ -200,6 +211,6 @@ dataset = Data(clean_paths=cnames,
                noisy_paths=xnames)
 
 train_loader = torch.utils.data.DataLoader(dataset, batch_size=None, shuffle=True, collate_fn=collate_fn)
+model = init_model()
 
-for i in train_loader:
-    print(i)
+train(model, train_loader)
