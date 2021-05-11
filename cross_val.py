@@ -175,13 +175,13 @@ def train(model, train_loader):
         for param in estClean.parameters():
             param.requires_grad = True
         
-if testFlag == 0: 
-    print('save DNN at epoch '+str(epoch))
-    torch.save(estClean.state_dict(), fileName+'_ep'+str(epoch))
-else:
-    print('test mode (do not save)') 
+    if testFlag == 0: 
+        print('save DNN at epoch '+str(epoch))
+        torch.save(estClean.state_dict(), fileName+'_ep'+str(epoch))
+    else:
+        print('test mode (do not save)') 
 
-train_score,val_score = crossvalid(res_model,criterion,optimizer,dataset=tiny_dataset)
+    train_score,val_score = crossvalid(res_model,criterion,optimizer,dataset=tiny_dataset)
 
 
 
