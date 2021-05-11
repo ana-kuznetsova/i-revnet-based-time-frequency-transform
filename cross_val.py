@@ -191,10 +191,10 @@ clean_path = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
 noisy_path = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
 
 fclean = os.listdir(clean_path)
-cnames = [os.path.join(i, clean_path) for i in fclean]
+cnames = [os.path.join(clean_path, i) for i in fclean]
 
 fmix = os.listdir(noisy_path)
-xnames = [os.path.join(i, noisy_path) for i in fmix]
+xnames = [os.path.join(noisy_path, i) for i in fmix]
 
 dataset = Data(clean_paths=cnames,
                noisy_paths=xnames)
