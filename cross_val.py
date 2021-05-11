@@ -191,6 +191,7 @@ clean_path = '/nobackup/anakuzne/data/COSINE-orig/clean-train'
 noisy_path = '/nobackup/anakuzne/data/COSINE-orig/noisy-train'
 
 fclean = os.listdir(clean_path)
+print(fclean)
 fclean = [os.path.join(i, clean_path) for i in fclean]
 
 fmix = os.listdir(noisy_path)
