@@ -108,6 +108,7 @@ def train(model, optimizer,
                 optimizer.zero_grad()
                 s = torch.from_numpy(np.array([])).float().reshape((0, speechLen)).cuda(deviceNum)
                 x = torch.from_numpy(np.array([])).float().reshape((0, speechLen)).cuda(deviceNum)
+                print(s, s.shape)
                 for bs in range(batchSize):
                     stmp = trainMiniSet[perm2[bs+utter*batchSize]][0]
                     xtmp = trainMiniSet[perm2[bs+utter*batchSize]][1]
