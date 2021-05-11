@@ -11,6 +11,11 @@ import librosa
 import random
 
 
+from modules import takeModules as tm
+from modules import myLossFunction as myLF
+from iRevNet import modelDifinition
+
+
 class Data(data.Dataset):
     def __init__(self, clean_paths, noisy_paths):
         self.clean_paths = clean_paths
