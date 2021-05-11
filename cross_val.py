@@ -72,7 +72,8 @@ def crossvalid(model=None,criterion=None,optimizer=None,dataset=None,k_fold=5):
 
 def init_model(layerNum=6, filt ='UNet5SpecNorm', 
               maskEstimator='binary', lossMode='SDR', 
-              lr_init=0.0001, initPad=red-1, deviceNum=1):
+              lr_init=0.0001, red=4, deviceNum=1):
+    initPad=red-1
     estClean = modelDifinition.iRevNetMasking(layerNum, filt, initPad, maskEstimator).cuda(deviceNum)
     optimizer = optim.Adam(estClean.parameters(), lr=lr_init, betas=(0.9, 0.999), eps=1e-08)
     lossFunc = eval('myLF.'+lossMode)
