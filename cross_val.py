@@ -91,7 +91,7 @@ def init_model(layerNum=6, filt ='UNet5SpecNorm',
     return estClean, optimizer, lossFunc
 
 
-def train(model, train_loader, val_loader=None, maxEpoch=500):
+def train(model, train_loader, val_loader=None, maxEpoch=500, batchSize=16):
     for epoch in range(1, maxEpoch+1):
         sumLoss  = 0.0
         sumSDR = 0.0
