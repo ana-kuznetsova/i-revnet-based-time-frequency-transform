@@ -95,7 +95,7 @@ def train(model, train_loader, val_loader=None, maxEpoch=500):
         sumLoss  = 0.0
         sumSDR = 0.0
 
-        for setNum in range(len(trainData)):
+        for setNum in range(len(train_loader)):
             sys.stdout.write('\repoch: '+str(epoch)+' TrnSet: '+str(setNum+1)+'/'+str(len(trainData))) 
             sys.stdout.flush()
             
