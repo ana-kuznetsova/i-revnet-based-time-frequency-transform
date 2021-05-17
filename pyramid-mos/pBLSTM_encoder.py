@@ -32,7 +32,7 @@ class Encoder(nn.Module):
         self.value_network = nn.Linear(hidden_dim*2, key_size)
   
     def forward(self, x, lens):
-        rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True)
+        rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True, batch_first=True)
         outputs, _ = self.lstm(rnn_inp)
         linear_input, _= pad_packed_sequence(outputs)
 
@@ -44,7 +44,7 @@ class Encoder(nn.Module):
             outputs = torch.mean(outputs, 2)
             outputs = torch.transpose(outputs,0,1)
             lens=lens//2
-            rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True)
+            rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True, batch_first=True)
             if i==0:
                 outputs, _ = self.pBLSTM1(rnn_inp)
             elif i==1:

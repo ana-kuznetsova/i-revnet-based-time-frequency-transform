@@ -14,33 +14,16 @@ from data import Data, collate_custom
 import torch.utils.data as data
 
 
-######
-#psedo 
-######
-def create_inout_sequences():
-	# read audio file
-	# source = audio_tf 
-	# train_label = mos_score
-
-    inout_seq = []
-
-    for i in range(len(source)):
-        train_seq = audio_tf[i]
-        train_label = mos_score[i]
-        inout_seq.append((train_seq ,train_label))
-    return inout_seq
-
-
 class EncodeDecoder(nn.Module):
     def __init__(self, encoder, decoder, max_len=601):
         super().__init__()
-
         self.encoder = encoder
         self.max_len = max_len
         self.decoder = decoder
 
-    def forward(self, source, target):
-        encoder_outputs, hidden = self.encoder(source, self.max_len)
+    def forward(self, source, lens):
+        encoder_outputs, hidden = self.encoder(source, lens)
+        print("encoder out:", encoder_outputs.shape)
         return self.decoder(encoder_outputs)
 
 
@@ -98,4 +81,4 @@ for batch in loader:
     audio = batch['aud'].to(device)
     lens = batch['lens']
     mos = batch['score'].to(device)
-    print(audio.shape, mos.shape)
+    pred = model(audio, lens)
