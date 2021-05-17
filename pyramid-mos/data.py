@@ -45,7 +45,7 @@ def replaceZeroes(data):
   data[data == 0] = min_nonzero
   return data
 
-def collate_custom(batch_data, maxlen=751):
+def collate_custom(batch_data, maxlen=601):
     batch_aud = []
     batch_scores = []
     lens = []
@@ -54,7 +54,7 @@ def collate_custom(batch_data, maxlen=751):
     for ex in batch_data:
         aud, score = ex
         aud, _ = librosa.core.load(aud, sr=16000)
-        aud = replaceZeroes(librosa.stft(aud, n_fft=512))
+        aud = replaceZeroes(librosa.stft(aud, n_fft=1024, hop_length=160, win_length=640))
         aud = np.abs(10*np.log10(aud))
         tmp.append((aud, score, aud.shape[1]))
 
