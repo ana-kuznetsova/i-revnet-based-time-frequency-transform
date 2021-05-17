@@ -64,7 +64,7 @@ def create_model(source, target):
 
     return model, optimizer, criterion
 
-
+'''
 train_inout_seq = create_inout_sequences(train_data_normalized, train_window)
 model, optimizer, criterion = create_model(source, target)
 
@@ -86,3 +86,4 @@ for i in range(epochs):
 
 
 print(f'epoch: {i:3} loss: {single_loss.item():10.10f}')
+'''

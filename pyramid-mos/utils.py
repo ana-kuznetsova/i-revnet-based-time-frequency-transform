@@ -5,19 +5,20 @@ import librosa
 
 
 fnames = pd.read_csv('/nobackup/anakuzne/data/COSINE-orig/csv/all.csv').sample(frac=1, random_state=42)['path']
-train = fnames[:int(len(fnames)*0.8)]
-test = fnames[int(len(fnames)*0.8):]
+#train = fnames[:int(len(fnames)*0.8)]
+#test = fnames[int(len(fnames)*0.8):]
 
-stack = None
+
 MAXLEN = 0
 
-for f in tqdm(train):
+for f in tqdm(fnames):
     f, _ = librosa.core.load(f, sr=16000)
-    f = np.nan_to_num(np.abs(10*np.log10(librosa.stft(f, n_fft=512))))
+    f = librosa.stft(f, n_fft=1024, hop_length=160, win_length=640)
     MAXLEN = max(MAXLEN, f.shape[1])
     print(f.shape[1])
 
 print("MAXLEN:", MAXLEN)
+
 '''
     if stack is None:
         stack = f 
