@@ -1,4 +1,6 @@
+from librosa.core import audio
 import numpy as np
+from torch.utils import data
 from tqdm import tqdm
 
 import torch
@@ -90,3 +92,9 @@ loader = torch.data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=
 
 dataset_dev = Data(csv_path, mode='dev')
 loader_dev = torch.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_fn=collate_custom)
+
+for batch in dataset:
+    audio = batch['aud'].to(device)
+    lens = batch['lens']
+    mos = batch['scores'].to(device)
+    print(audio.shape, mos.shape)
