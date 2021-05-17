@@ -94,8 +94,7 @@ loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collat
 dataset_dev = Data(csv_path, mode='dev')
 loader_dev = data.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_fn=collate_custom)
 
-for batch in dataset:
-    print(batch)
+for batch in loader:
     audio = batch['aud'].to(device)
     lens = batch['lens']
     mos = batch['scores'].to(device)
