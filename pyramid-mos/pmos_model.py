@@ -11,6 +11,7 @@ import torch.nn.functional as F
 from pBLSTM_encoder import Encoder
 from pLSTM_decoder import Decoder
 from data import Data, collate_custom
+import torch.utils.data as data
 
 
 ######
@@ -88,10 +89,10 @@ criterion = nn.MSELoss()
 csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
 
 dataset = Data(csv_path, mode='train')
-loader = torch.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
+loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
 
 dataset_dev = Data(csv_path, mode='dev')
-loader_dev = torch.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_fn=collate_custom)
+loader_dev = data.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_fn=collate_custom)
 
 for batch in dataset:
     audio = batch['aud'].to(device)
