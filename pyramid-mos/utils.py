@@ -15,7 +15,6 @@ for f in tqdm(fnames):
     f, _ = librosa.core.load(f, sr=16000)
     f = librosa.stft(f, n_fft=1024, hop_length=160, win_length=640)
     MAXLEN = max(MAXLEN, f.shape[1])
-    print(f.shape[1])
 
 print("MAXLEN:", MAXLEN)
 
