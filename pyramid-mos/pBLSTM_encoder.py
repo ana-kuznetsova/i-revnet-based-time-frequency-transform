@@ -25,9 +25,9 @@ class Encoder(nn.Module):
                             hidden_size=hidden_dim,
                             num_layers=1,
                             bidirectional=True)
-        self.pBLSTM1= pBLSTM(2*hidden_dim, hidden_dim)
-        self.pBLSTM2= pBLSTM(2*hidden_dim, hidden_dim)
-        self.pBLSTM3= pBLSTM(2*hidden_dim, hidden_dim)
+        self.pBLSTM1 = pBLSTM(2*hidden_dim, hidden_dim)
+        self.pBLSTM2 = pBLSTM(2*hidden_dim, hidden_dim)
+        self.pBLSTM3 = pBLSTM(2*hidden_dim, hidden_dim)
         self.key_network = nn.Linear(hidden_dim*2, value_size)
         self.value_network = nn.Linear(hidden_dim*2, key_size)
   
@@ -46,11 +46,11 @@ class Encoder(nn.Module):
             lens=lens//2
             rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=False)
             if i==0:
-                outputs, _=self.pBLSTM1(rnn_inp)
+                outputs, _ = self.pBLSTM1(rnn_inp)
             elif i==1:
-                outputs, _=self.pBLSTM2(rnn_inp)
+                outputs, _ = self.pBLSTM2(rnn_inp)
             else:
-                outputs, _=self.pBLSTM3(rnn_inp)
+                outputs, _ = self.pBLSTM3(rnn_inp)
             linear_input, _ = pad_packed_sequence(outputs)
         keys = self.key_network(linear_input)
         value = self.value_network(linear_input)
