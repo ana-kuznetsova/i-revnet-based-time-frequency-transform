@@ -76,4 +76,6 @@ for batch in loader:
     audio = batch['aud'].to(device)
     lens = batch['lens']
     mos = batch['score'].to(device)
-    print(audio.shape)
+    K, V, _ = encoder(audio, lens)
+    print(K.shape)
+    
