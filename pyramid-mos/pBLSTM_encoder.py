@@ -67,10 +67,11 @@ loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collat
 
 input_dim = 601
 hidden_dim = 128
+device = 'cuda:1'
 
 encoder = Encoder(input_dim, hidden_dim)
+encoder.to(device)
 
-device = 'cuda:1'
 
 for batch in loader:
     audio = batch['aud'].to(device)
