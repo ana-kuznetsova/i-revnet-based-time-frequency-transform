@@ -15,27 +15,11 @@ import copy
 import sys
 
 from data import Data, collate_custom
-from encoder import Encoder
-from attn import Attention
-
-
-class EncoderDecoder(nn.Module):
-    def __init__(self, input_dim, hidden_dim):
-        super(EncoderDecoder, self).__init__()
-        self.bnorm = nn.BatchNorm1d(input_dim)
-        self.encoder = Encoder(input_dim, hidden_dim)
-        self.attn_decoder = Attention()
-
-    def forward(self, x, lens):
-        x = self.bnorm(x)
-        K, V, Q, lens = self.encoder(x, lens)
-        attn_out = self.attn_decoder(Q, K, V)
-        return attn_out
 
 
 ######### TRAINING LOOP ###########
 
-wandb.init(project='i-rev-net-verify', entity='anakuzne')
+#wandb.init(project='i-rev-net-verify', entity='anakuzne')
 
 
 
