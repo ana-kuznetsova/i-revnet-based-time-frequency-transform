@@ -57,3 +57,23 @@ class Encoder(nn.Module):
 
         return keys, value, lens
 
+#######################################
+from data import Data, collate_custom
+import torch.utils.data as data
+
+csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
+dataset = Data(csv_path, mode='train')
+loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
+
+input_dim = 601
+hidden_dim = 128
+
+encoder = Encoder(input_dim, hidden_dim)
+
+device = 'cuda:1'
+
+for batch in loader:
+    audio = batch['aud'].to(device)
+    lens = batch['lens']
+    mos = batch['score'].to(device)
+    print(audio.shape)
