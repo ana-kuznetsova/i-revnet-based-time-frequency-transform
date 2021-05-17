@@ -97,5 +97,5 @@ loader_dev = data.DataLoader(dataset_dev, batch_size=5, shuffle=False, collate_f
 for batch in loader:
     audio = batch['aud'].to(device)
     lens = batch['lens']
-    mos = batch['scores'].to(device)
+    mos = batch['score'].to(device)
     print(audio.shape, mos.shape)
