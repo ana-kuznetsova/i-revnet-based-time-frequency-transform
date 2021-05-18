@@ -70,7 +70,7 @@ csv_path = '/nobackup/anakuzne/data/COSINE-orig/csv/all.csv'
 dataset = Data(csv_path, mode='train')
 loader = data.DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate_custom)
 
-input_dim = 601
+input_dim = 513
 hidden_dim = 128
 device = 'cuda:1'
 

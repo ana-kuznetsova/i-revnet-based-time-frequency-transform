@@ -54,7 +54,7 @@ print(f'epoch: {i:3} loss: {single_loss.item():10.10f}')
 '''
 device = torch.device('cuda:1')
 embedding_dim = 1
-input_dim = 601
+input_dim = 513
 hidden_dim = 128
 dropout = 0.5
 learning_rate = 0.0001
