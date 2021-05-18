@@ -34,10 +34,11 @@ class Encoder(nn.Module):
     def forward(self, x, lens):
         x = torch.transpose(x, 1, -1)
         print("X", x.shape)
-        rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True, batch_first=True)
+        # x shape should be T x B x *
+        rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True)
 
         outputs, _ = self.lstm(rnn_inp)
-        linear_input, _= pad_packed_sequence(outputs, batch_first=True)
+        linear_input, _= pad_packed_sequence(outputs)
         print("IN shape:", linear_input.shape)
 
         for i in range(3):
