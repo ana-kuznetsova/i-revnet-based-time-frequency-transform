@@ -23,7 +23,6 @@ class EncodeDecoder(nn.Module):
     def forward(self, source, lens, device):
         keys, values, lens = self.encoder(source, lens)
         #torch.Size([59, 5, 128])  TxBx*
-        print(keys.shape, values.shape)
         return self.decoder(keys, values, lens, device)
 
 
