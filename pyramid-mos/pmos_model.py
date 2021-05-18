@@ -15,16 +15,16 @@ import torch.utils.data as data
 
 
 class EncodeDecoder(nn.Module):
-    def __init__(self, encoder, decoder, max_len=601):
+    def __init__(self, encoder, decoder):
         super().__init__()
         self.encoder = encoder
-        self.max_len = max_len
         self.decoder = decoder
 
-    def forward(self, source, lens):
-        encoder_outputs, hidden = self.encoder(source, lens)
-        print("encoder out:", encoder_outputs.shape)
-        return self.decoder(encoder_outputs)
+    def forward(self, source, lens, device):
+        keys, values, lens = self.encoder(source, lens)
+        #torch.Size([59, 5, 128])  TxBx*
+        print(keys.shape, values.shape)
+        return self.decoder(keys, values, lens, device)
 
 
 
@@ -82,3 +82,4 @@ for batch in loader:
     lens = batch['lens']
     mos = batch['score'].to(device)
     pred = model(audio, lens)
+    print(pred)
