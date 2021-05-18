@@ -52,6 +52,7 @@ class Decoder(nn.Module):
 			text=torch.transpose(text,0,1)
 			print("text:", text.shape)
 			max_len=text.shape[1]
+			print("maxlen:", max_len)
 			embeddings=self.embedding(text)
 		else:
 			max_len = 601
