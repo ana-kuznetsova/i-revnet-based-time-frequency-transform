@@ -63,6 +63,7 @@ class Encoder(nn.Module):
         return keys, value, lens
 
 #######################################
+'''
 from data import Data, collate_custom
 import torch.utils.data as data
 
@@ -84,4 +85,4 @@ for batch in loader:
     mos = batch['score'].to(device)
     K, V, _ = encoder(audio, lens)
     #print(K.shape, V.shape)
-    
+'''
