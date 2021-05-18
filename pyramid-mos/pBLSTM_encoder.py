@@ -47,9 +47,12 @@ class Encoder(nn.Module):
                 linear_input = linear_input[:-1,:,:]
             print("Lin input:", linear_input.shape)
             outputs = torch.transpose(linear_input, 0, 1)
+            print("outputs:", outputs.shape)
             outputs = outputs.contiguous().view(outputs.shape[0], outputs.shape[1]//2, 2, outputs.shape[2])
+            print("outputs:", outputs.shape)
             outputs = torch.mean(outputs, 2)
             outputs = torch.transpose(outputs,0,1)
+            print("outputs:", outputs.shape)
             lens=lens//2
             rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True, batch_first=True)
             if i==0:
