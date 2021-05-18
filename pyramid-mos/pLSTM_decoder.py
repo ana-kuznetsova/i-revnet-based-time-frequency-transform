@@ -48,6 +48,7 @@ class Decoder(nn.Module):
 		batch_size=key.shape[1]
 		if(train):
 			text=torch.transpose(text,0,1)
+			print("text:", text.shape)
 			max_len=text.shape[1]
 			embeddings=self.embedding(text)
 		else:
