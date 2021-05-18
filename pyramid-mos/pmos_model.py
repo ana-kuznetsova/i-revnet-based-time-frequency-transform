@@ -81,4 +81,4 @@ for batch in loader:
     lens = batch['lens']
     mos = batch['score'].to(device)
     pred = model(audio, lens)
-    print(pred)
+    print("Model out:", pred)

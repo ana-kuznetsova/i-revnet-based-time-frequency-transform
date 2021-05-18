@@ -83,5 +83,5 @@ for batch in loader:
     lens = batch['lens']
     mos = batch['score'].to(device)
     K, V, _ = encoder(audio, lens)
-    print(K.shape, V.shape)
+    #print(K.shape, V.shape)
     
