@@ -35,9 +35,9 @@ class Encoder(nn.Module):
         x = torch.transpose(x, 1, -1)
         print("X", x.shape)
         rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True, batch_first=True)
-        print("rnn inp:", rnn_inp.shape)
 
         outputs, _ = self.lstm(rnn_inp)
+        print("lstm out:", outputs.shape)
         linear_input, _= pad_packed_sequence(outputs)
         print("IN shape:", linear_input.shape)
 
