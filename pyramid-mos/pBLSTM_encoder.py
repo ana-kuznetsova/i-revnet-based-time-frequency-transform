@@ -35,6 +35,7 @@ class Encoder(nn.Module):
         rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True, batch_first=True)
         outputs, _ = self.lstm(rnn_inp)
         linear_input, _= pad_packed_sequence(outputs)
+        print("IN shape:", linear_input.shape)
 
         for i in range(3):
             if linear_input.shape[0]%2!=0:
