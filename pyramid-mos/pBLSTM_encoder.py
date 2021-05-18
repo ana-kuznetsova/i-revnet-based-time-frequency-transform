@@ -33,6 +33,7 @@ class Encoder(nn.Module):
   
     def forward(self, x, lens):
         x = torch.transpose(x, 1, -1)
+        x = torch.transpose(x, 0, 1)
         print("X", x.shape)
         # x shape should be T x B x *
         rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True)
