@@ -43,6 +43,7 @@ class Encoder(nn.Module):
         for i in range(3):
             if linear_input.shape[0]%2!=0:
                 linear_input = linear_input[:-1,:,:]
+            print("Lin input:", linear_input.shape)
             outputs = torch.transpose(linear_input, 0, 1)
             outputs = outputs.contiguous().view(outputs.shape[0], outputs.shape[1]//2, 2, outputs.shape[2])
             outputs = torch.mean(outputs, 2)
