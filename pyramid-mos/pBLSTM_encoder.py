@@ -34,27 +34,21 @@ class Encoder(nn.Module):
     def forward(self, x, lens):
         x = torch.transpose(x, 1, -1)
         x = torch.transpose(x, 0, 1)
-        print("X", x.shape)
+
         # x shape should be T x B x *
         rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True)
 
         outputs, _ = self.lstm(rnn_inp)
         linear_input, _= pad_packed_sequence(outputs)
-        print("IN shape:", linear_input.shape)
 
         for i in range(3):
             if linear_input.shape[0]%2!=0:
                 linear_input = linear_input[:-1,:,:]
-            print("Lin input:", linear_input.shape)
             outputs = torch.transpose(linear_input, 0, 1)
-            #print("outputs:", outputs.shape)
             outputs = outputs.contiguous().view(outputs.shape[0], outputs.shape[1]//2, 2, outputs.shape[2])
-            #print("outputs:", outputs.shape)
             outputs = torch.mean(outputs, 2)
             outputs = torch.transpose(outputs,0,1)
-            print("outputs:", outputs.shape)
             lens=lens//2
-            print("lens:", lens.shape)
             rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True)
             if i==0:
                 outputs, _ = self.pBLSTM1(rnn_inp)
@@ -89,5 +83,5 @@ for batch in loader:
     lens = batch['lens']
     mos = batch['score'].to(device)
     K, V, _ = encoder(audio, lens)
-    print(K.shape)
+    print(K.shape, V.shape)
     
