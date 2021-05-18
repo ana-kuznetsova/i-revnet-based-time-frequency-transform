@@ -50,7 +50,7 @@ class Decoder(nn.Module):
 		if(train):
 			print("text:", text.shape)
 			text = torch.transpose(text, 1, -1)
-			text = torch.transpose(text, 0, 1)
+			#text = torch.transpose(text, 0, 1)
 			print("text:", text.shape)
 			max_len=text.shape[1]
 			print("maxlen:", max_len)
