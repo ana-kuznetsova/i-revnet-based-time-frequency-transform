@@ -51,7 +51,7 @@ class Decoder(nn.Module):
 			max_len=text.shape[1]
 			embeddings=self.embedding(text)
 		else:
-			max_len = 200
+			max_len = 601
 		
 		predictions = []
 		hidden_states = [None, None]
