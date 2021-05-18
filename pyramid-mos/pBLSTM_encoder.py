@@ -55,7 +55,7 @@ class Encoder(nn.Module):
             print("outputs:", outputs.shape)
             lens=lens//2
             print("lens:", lens.shape)
-            rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True, batch_first=True)
+            rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True)
             if i==0:
                 outputs, _ = self.pBLSTM1(rnn_inp)
             elif i==1:
