@@ -46,9 +46,9 @@ class Decoder(nn.Module):
 		:return predictions: Returns the character perdiction probability 
 		'''
 		batch_size=key.shape[1]
-		print(text.shape, batch_size)
 
 		if(train):
+			print("text:", text.shape)
 			text=torch.transpose(text,0,1)
 			print("text:", text.shape)
 			max_len=text.shape[1]
