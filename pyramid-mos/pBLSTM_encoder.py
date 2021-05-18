@@ -32,7 +32,7 @@ class Encoder(nn.Module):
         self.value_network = nn.Linear(hidden_dim*2, key_size)
   
     def forward(self, x, lens):
-        x = torch.transpose(1, -1)
+        x = torch.transpose(x, 1, -1)
         print("X", x.shape)
         rnn_inp = pack_padded_sequence(x, lengths=lens, enforce_sorted=True, batch_first=True)
         print("rnn inp:", rnn_inp.shape)
