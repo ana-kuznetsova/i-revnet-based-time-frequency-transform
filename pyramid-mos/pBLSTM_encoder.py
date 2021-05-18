@@ -54,7 +54,7 @@ class Encoder(nn.Module):
             outputs = torch.transpose(outputs,0,1)
             print("outputs:", outputs.shape)
             lens=lens//2
-            print("lens:", lens)
+            print("lens:", lens.shape)
             rnn_inp = pack_padded_sequence(outputs, lengths=lens, enforce_sorted=True, batch_first=True)
             if i==0:
                 outputs, _ = self.pBLSTM1(rnn_inp)
